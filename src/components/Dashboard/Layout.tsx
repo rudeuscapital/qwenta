@@ -12,7 +12,6 @@ const NAV = [
 const DOCS_NAV = [
   { href:"/docs",            label:"Overview" },
   { href:"/docs/api",        label:"API Reference" },
-  { href:"/docs/tutorials",  label:"Tutorials" },
   { href:"/docs/changelog",  label:"Changelog" },
 ];
 
