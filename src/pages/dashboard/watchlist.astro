@@ -1,0 +1,10 @@
+---
+import Base from "../../layouts/Base.astro";
+import WatchlistView from "../../components/Dashboard/WatchlistView";
+import { getSessionFromRequest } from "../../lib/auth";
+const user = await getSessionFromRequest(Astro.request);
+if (!user) return Astro.redirect("/login");
+---
+<Base title="Watchlist" fullscreen={true}>
+  <WatchlistView wallet={user.wallet} client:load />
+</Base>

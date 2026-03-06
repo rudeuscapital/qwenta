@@ -1,0 +1,10 @@
+---
+import Base from "../../layouts/Base.astro";
+import TradingView from "../../components/Dashboard/TradingView";
+import { getSessionFromRequest } from "../../lib/auth";
+const user = await getSessionFromRequest(Astro.request);
+if (!user) return Astro.redirect("/login");
+---
+<Base title="Dashboard" fullscreen={true}>
+  <TradingView wallet={user.wallet} client:load />
+</Base>

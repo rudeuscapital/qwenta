@@ -1,0 +1,10 @@
+---
+import Base from "../../layouts/Base.astro";
+import PortfolioView from "../../components/Dashboard/PortfolioView";
+import { getSessionFromRequest } from "../../lib/auth";
+const user = await getSessionFromRequest(Astro.request);
+if (!user) return Astro.redirect("/login");
+---
+<Base title="Portfolio" fullscreen={true}>
+  <PortfolioView wallet={user.wallet} client:load />
+</Base>

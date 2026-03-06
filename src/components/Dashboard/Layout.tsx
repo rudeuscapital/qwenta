@@ -1,0 +1,94 @@
+import { useState } from "react";
+
+const NAV = [
+  { href:"/dashboard",            icon:"◈", label:"Dashboard" },
+  { href:"/dashboard/watchlist",  icon:"◉", label:"Watchlist" },
+  { href:"/dashboard/portfolio",  icon:"◎", label:"Portfolio" },
+  { href:"/dashboard/screener",   icon:"⊞", label:"Screener" },
+  { href:"/dashboard/compare",    icon:"⊟", label:"Compare" },
+];
+
+const DOCS_NAV = [
+  { href:"/docs",            label:"Overview" },
+  { href:"/docs/api",        label:"API Reference" },
+  { href:"/docs/tutorials",  label:"Tutorials" },
+  { href:"/docs/changelog",  label:"Changelog" },
+];
+
+interface Props { active: string; children: React.ReactNode; wallet?: string }
+
+export default function DashboardLayout({ active, children, wallet }: Props) {
+  const [collapsed, setCollapsed] = useState(false);
+
+  const logout = async () => {
+    await fetch("/api/auth", { method: "DELETE" });
+    window.location.href = "/";
+  };
+
+  return (
+    <div class="flex h-screen overflow-hidden bg-void-900">
+      {/* Sidebar */}
+      <aside class={`flex flex-col border-r border-void-700 bg-void-850 shrink-0 transition-all duration-200 ${collapsed ? "w-14" : "w-52"}`}>
+        {/* Logo */}
+        <div class="flex items-center gap-3 px-4 py-4 border-b border-void-700">
+          <a href="/" class="flex items-center gap-2 shrink-0">
+            <img src="/logo.png" alt="Qwenta" class="w-7 h-7 rounded-lg shrink-0" />
+            {!collapsed && <span class="font-display text-white text-sm italic">Qwenta</span>}
+          </a>
+          <button onClick={() => setCollapsed(!collapsed)}
+            class="ml-auto text-void-500 hover:text-slate-400 transition-colors text-xs shrink-0">
+            {collapsed ? "▶" : "◀"}
+          </button>
+        </div>
+
+        {/* Nav */}
+        <nav class="flex-1 py-3 px-2 space-y-0.5">
+          {NAV.map(item => {
+            const isActive = active === item.href;
+            return (
+              <a key={item.href} href={item.href}
+                class={`flex items-center gap-3 px-2.5 py-2 rounded-lg transition-all text-sm ${isActive ? "bg-cyan-500/10 text-cyan-400 border border-cyan-500/20" : "text-void-500 hover:text-slate-300 hover:bg-void-700"}`}>
+                <span class={`text-base shrink-0 ${isActive ? "text-cyan-400" : ""}`}>{item.icon}</span>
+                {!collapsed && <span class={`text-xs tracking-wide font-medium ${isActive ? "text-cyan-300" : ""}`}>{item.label}</span>}
+                {isActive && !collapsed && <span class="ml-auto w-1 h-1 rounded-full bg-cyan-400" />}
+              </a>
+            );
+          })}
+
+          {!collapsed && (
+            <>
+              <div class="h-px bg-void-700 my-2" />
+              <p class="text-[9px] font-mono text-void-600 px-2.5 py-1 tracking-widest uppercase">Docs</p>
+              {DOCS_NAV.map(item => (
+                <a key={item.href} href={item.href}
+                  class="flex items-center gap-3 px-2.5 py-1.5 rounded text-[10px] font-mono text-void-500 hover:text-slate-400 transition-colors">
+                  · {item.label}
+                </a>
+              ))}
+            </>
+          )}
+        </nav>
+
+        {/* User / Logout */}
+        <div class="px-3 py-3 border-t border-void-700">
+          {!collapsed && wallet && (
+            <div class="mb-2 px-2">
+              <p class="text-[9px] font-mono text-void-500 tracking-widest">CONNECTED</p>
+              <p class="text-[10px] font-mono text-cyan-400 mt-0.5 truncate">{wallet.slice(0,6)}...{wallet.slice(-4)}</p>
+            </div>
+          )}
+          <button onClick={logout}
+            class={`w-full flex items-center gap-2 px-2.5 py-1.5 rounded text-[10px] font-mono text-void-500 hover:text-bear transition-colors ${collapsed ? "justify-center" : ""}`}>
+            <span>⏏</span>
+            {!collapsed && "Disconnect"}
+          </button>
+        </div>
+      </aside>
+
+      {/* Content */}
+      <div class="flex-1 flex flex-col min-w-0 overflow-hidden">
+        {children}
+      </div>
+    </div>
+  );
+}

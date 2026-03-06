@@ -1,0 +1,10 @@
+---
+import Base from "../../layouts/Base.astro";
+import CompareView from "../../components/Dashboard/CompareView";
+import { getSessionFromRequest } from "../../lib/auth";
+const user = await getSessionFromRequest(Astro.request);
+if (!user) return Astro.redirect("/login");
+---
+<Base title="Compare" fullscreen={true}>
+  <CompareView wallet={user.wallet} client:load />
+</Base>

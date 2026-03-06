@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:localhost)",
+      "Bash(curl -s http://localhost:4321/docs)",
+      "Bash(curl -s http://localhost:4321/docs/getting-started)",
+      "Bash(curl -s http://localhost:4321/docs/changelog)",
+      "Bash(curl -s http://localhost:4321/docs/tutorials)",
+      "Bash(curl -s -D - http://localhost:4321/docs/tutorials)",
+      "Bash(curl -s \"http://localhost:4321/docs/tutorials\" -H \"Accept: application/json\")",
+      "Bash(curl -s \"http://localhost:4321/@vite/client\")",
+      "Bash(curl -s \"http://localhost:4321/__vite_error\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:4321/docs/tutorials)",
+      "Bash(for page in /docs /docs/getting-started /docs/changelog /docs/tutorials)",
+      "Bash(do echo -n \"$page: \")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" \"http://localhost:4321$page\")",
+      "Bash(done)"
+    ]
+  }
+}

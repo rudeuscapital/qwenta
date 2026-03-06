@@ -1,0 +1,107 @@
+---
+import DocsLayout from "../../layouts/DocsLayout.astro";
+---
+<DocsLayout title="Getting Started">
+<div class="prose">
+
+<h1>Getting Started</h1>
+
+<p>Get Qwenta running in under 10 minutes.</p>
+
+<h2>Prerequisites</h2>
+
+<ul>
+  <li>Node.js 18+</li>
+  <li>PostgreSQL 14+</li>
+  <li>Ollama installed</li>
+</ul>
+
+<h2>1. Clone &amp; Install</h2>
+
+<pre><code>git clone https://github.com/your-org/qwenta
+cd qwenta
+npm install</code></pre>
+
+<h2>2. Configure Environment</h2>
+
+<pre><code>cp .env.example .env</code></pre>
+
+<p>Edit <code>.env</code>:</p>
+
+<pre><code>DATABASE_URL=postgresql://user:password@localhost:5432/qwenta
+OLLAMA_BASE_URL=http://localhost:11434
+OLLAMA_MODEL=qwen2.5
+SESSION_SECRET=generate-with-openssl-rand-hex-32
+PUBLIC_APP_URL=http://localhost:4321</code></pre>
+
+<h2>3. Setup Database</h2>
+
+<pre><code># Create database
+createdb qwenta
+
+# Run migrations
+node scripts/migrate.js</code></pre>
+
+<h2>4. Setup Ollama &amp; Qwen</h2>
+
+<pre><code># Install Ollama
+curl -fsSL https://ollama.com/install.sh | sh
+
+# Pull Qwen model
+ollama pull qwen2.5
+
+# Verify it's running
+curl http://localhost:11434/api/tags</code></pre>
+
+<h2>5. Start Development Server</h2>
+
+<pre><code>npm run dev
+# Open http://localhost:4321</code></pre>
+
+<h2>6. Connect Your Wallet</h2>
+
+<ol>
+  <li>Open <code>http://localhost:4321</code></li>
+  <li>Click <strong>Connect Wallet</strong></li>
+  <li>Select MetaMask or any WalletConnect wallet</li>
+  <li>Sign the SIWE message (no transaction)</li>
+  <li>You're in the dashboard</li>
+</ol>
+
+<h2>Production Build</h2>
+
+<pre><code>npm run build
+npm start
+# Runs on port 4321</code></pre>
+
+<h2>Deploying with Docker</h2>
+
+<pre><code>FROM node:20-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN npm run build
+EXPOSE 4321
+CMD ["npm", "start"]</code></pre>
+
+<pre><code># With Docker Compose
+docker-compose up -d</code></pre>
+
+<h2>Environment Variables Reference</h2>
+
+<table>
+  <thead>
+    <tr><th>Variable</th><th>Required</th><th>Default</th><th>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><code>DATABASE_URL</code></td><td>Yes</td><td>—</td><td>PostgreSQL connection string</td></tr>
+    <tr><td><code>OLLAMA_BASE_URL</code></td><td>—</td><td><code>http://localhost:11434</code></td><td>Ollama server URL</td></tr>
+    <tr><td><code>OLLAMA_MODEL</code></td><td>—</td><td><code>qwen2.5</code></td><td>Model name</td></tr>
+    <tr><td><code>SESSION_SECRET</code></td><td>Yes</td><td>—</td><td>Min 32 chars for session signing</td></tr>
+    <tr><td><code>PUBLIC_APP_URL</code></td><td>—</td><td><code>http://localhost:4321</code></td><td>App URL for SIWE domain</td></tr>
+  </tbody>
+</table>
+
+</div>
+</DocsLayout>

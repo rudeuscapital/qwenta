@@ -1,0 +1,210 @@
+---
+import Base from "../layouts/Base.astro";
+---
+<Base title="Enterprise AI Trading Platform" description="Qwenta — Institutional-grade trading intelligence powered by local AI.">
+
+<!-- ── NAVBAR ─────────────────────────────────────────────────────────── -->
+<nav class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-4 border-b border-void-700/50 backdrop-blur-xl bg-void-900/80">
+  <a href="/" class="flex items-center gap-2.5">
+    <img src="/logo.png" alt="Qwenta" class="w-8 h-8 rounded-lg" />
+    <span class="font-display text-white text-lg italic">Qwenta</span>
+    <span class="text-[9px] font-mono text-cyan-500 border border-cyan-500/30 px-1.5 py-0.5 rounded tracking-widest">ENTERPRISE</span>
+  </a>
+
+  <div class="hidden md:flex items-center gap-8 text-sm text-slate-400">
+    <a href="#features" class="hover:text-cyan-400 transition-colors">Features</a>
+    <a href="#security" class="hover:text-cyan-400 transition-colors">Security</a>
+    <a href="/docs" class="hover:text-cyan-400 transition-colors">Docs</a>
+    <a href="#roadmap" class="hover:text-cyan-400 transition-colors">Roadmap</a>
+  </div>
+
+  <a href="/login" class="flex items-center gap-2 px-5 py-2 bg-cyan-500/10 border border-cyan-500/30 rounded-lg text-cyan-400 text-sm font-medium hover:bg-cyan-500/20 transition-all hover:shadow-cyan-sm">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+    Connect Wallet
+  </a>
+</nav>
+
+<!-- ── HERO ───────────────────────────────────────────────────────────── -->
+<section class="relative min-h-screen flex flex-col items-center justify-center text-center px-6 pt-20 overflow-hidden">
+  <!-- Grid background -->
+  <div class="absolute inset-0 bg-grid-void bg-grid opacity-100" />
+  <!-- Glow -->
+  <div class="absolute inset-0 bg-glow-hero" />
+  <!-- Scan line -->
+  <div class="absolute w-full h-[1px] bg-gradient-to-r from-transparent via-cyan-500/20 to-transparent animate-scan-line" />
+
+  <div class="relative z-10 max-w-5xl mx-auto">
+    <!-- Badge -->
+    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-cyan-500/20 bg-cyan-500/5 text-xs font-mono text-cyan-400 mb-8 animate-fade-in">
+      <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+      Now with Qwen AI Analyst — Local, Private, Fast
+    </div>
+
+    <!-- Headline -->
+    <h1 class="font-display text-6xl md:text-8xl text-white mb-6 leading-none animate-slide-up" style="animation-delay:0.1s;opacity:0">
+      Trade with<br/>
+      <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-lime-400">
+        Institutional
+      </span><br/>
+      Intelligence
+    </h1>
+
+    <p class="text-xl text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed animate-slide-up" style="animation-delay:0.2s;opacity:0">
+      Qwenta combines real-time market data, advanced technical analysis, portfolio tracking, and private AI — all running locally. Built for enterprise teams who demand edge.
+    </p>
+
+    <div class="flex flex-col sm:flex-row gap-4 justify-center animate-slide-up" style="animation-delay:0.3s;opacity:0">
+      <a href="/login" class="group relative px-8 py-3.5 bg-cyan-500 text-void-900 rounded-xl font-semibold text-sm hover:bg-cyan-400 transition-all shadow-cyan overflow-hidden">
+        <span class="relative z-10 flex items-center gap-2">
+          Connect Wallet & Enter
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </span>
+      </a>
+      <a href="/docs" class="px-8 py-3.5 border border-void-500 rounded-xl text-slate-300 text-sm font-medium hover:border-cyan-500/40 hover:text-cyan-300 transition-all">
+        Read the Docs
+      </a>
+    </div>
+
+    <!-- Stats -->
+    <div class="grid grid-cols-3 gap-8 max-w-lg mx-auto mt-20 animate-slide-up" style="animation-delay:0.5s;opacity:0">
+      {[["50+","Indicators"], ["100%","Local AI"], ["5","Pages"]].map(([val, label]) => (
+        <div class="text-center">
+          <p class="text-3xl font-display text-white">{val}</p>
+          <p class="text-xs font-mono text-slate-500 mt-1 tracking-widest uppercase">{label}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <!-- Floating chart mockup -->
+  <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-48 opacity-20 pointer-events-none">
+    <svg viewBox="0 0 800 150" preserveAspectRatio="none" class="w-full h-full">
+      <defs><linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#06b6d4" stop-opacity="0.4"/><stop offset="100%" stop-color="#06b6d4" stop-opacity="0"/></linearGradient></defs>
+      <path d="M0,120 C50,100 80,80 120,70 S180,40 220,50 S280,90 320,60 S380,20 420,30 S480,80 520,40 S580,10 620,20 S680,60 720,30 S760,10 800,15 L800,150 L0,150 Z" fill="url(#chartGrad)"/>
+      <path d="M0,120 C50,100 80,80 120,70 S180,40 220,50 S280,90 320,60 S380,20 420,30 S480,80 520,40 S580,10 620,20 S680,60 720,30 S760,10 800,15" fill="none" stroke="#06b6d4" stroke-width="1.5"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ── FEATURES ────────────────────────────────────────────────────────── -->
+<section id="features" class="py-32 px-6 relative">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-20">
+      <p class="text-xs font-mono text-cyan-500 tracking-widest uppercase mb-3">Platform Capabilities</p>
+      <h2 class="font-display text-5xl text-white">Everything you need<br/>to trade at the edge</h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {[
+        { icon:"◈", title:"Live Chart Engine", desc:"Multi-timeframe charts (1H–Weekly) with Bollinger Bands, SMA/EMA 20/50, RSI(14), MACD. Price, volume, and momentum in one view.", color:"text-cyan-400" },
+        { icon:"◉", title:"Watchlist Manager", desc:"Multiple watchlists with live prices, daily change, market cap, and custom notes. PostgreSQL-backed, per-wallet isolated.", color:"text-lime-400" },
+        { icon:"◎", title:"Portfolio Tracker", desc:"Track positions with weighted avg cost. Real-time unrealized P&L, transaction history, and portfolio-level summary.", color:"text-cyan-400" },
+        { icon:"⊞", title:"Stock Screener", desc:"Filter entire market by RSI range, MACD direction, SMA cross, price range, daily change %. Six built-in presets.", color:"text-lime-400" },
+        { icon:"⊟", title:"Multi-Symbol Compare", desc:"Normalize and compare up to 6 symbols on the same chart. Period-relative return overlay.", color:"text-cyan-400" },
+        { icon:"⬡", title:"Qwen AI Analyst", desc:"Local AI with full market context — OHLCV, indicators, fundamentals. Streaming responses. 100% private, no cloud.", color:"text-lime-400" },
+        { icon:"⤓", title:"Export CSV / XLSX", desc:"Export any symbol's full OHLCV + indicator data as CSV or multi-sheet Excel file.", color:"text-cyan-400" },
+        { icon:"◊", title:"WalletConnect Auth", desc:"Sign-In with Ethereum (SIWE). One click with MetaMask, Phantom, Coinbase, or any WalletConnect-compatible wallet.", color:"text-lime-400" },
+        { icon:"◻", title:"Full API Surface", desc:"Seven RESTful endpoints. Stock data, chat, watchlist, portfolio, screener, compare, export. Documented with OpenAPI.", color:"text-cyan-400" },
+      ].map(f => (
+        <div class="group p-6 rounded-2xl border border-void-600 bg-gradient-card hover:border-cyan-500/30 transition-all hover:shadow-card">
+          <p class={`text-2xl mb-4 ${f.color}`}>{f.icon}</p>
+          <h3 class="text-white font-semibold mb-2">{f.title}</h3>
+          <p class="text-slate-500 text-sm leading-relaxed">{f.desc}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- ── SECURITY ────────────────────────────────────────────────────────── -->
+<section id="security" class="py-32 px-6 border-t border-void-700/50">
+  <div class="max-w-4xl mx-auto text-center">
+    <p class="text-xs font-mono text-lime-400 tracking-widest uppercase mb-3">Enterprise Security</p>
+    <h2 class="font-display text-5xl text-white mb-6">Private by architecture</h2>
+    <p class="text-slate-400 text-lg mb-16 leading-relaxed">No API keys sent to third parties. Your AI runs locally via Ollama. Your data lives in your PostgreSQL. Your identity is your wallet.</p>
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+      {[
+        { icon:"🔐", title:"SIWE Authentication", desc:"Sign-In with Ethereum. Cryptographic proof of wallet ownership. No passwords, no email." },
+        { icon:"🏠", title:"Local AI Processing", desc:"Qwen runs on your hardware via Ollama. Zero data leaves your infrastructure." },
+        { icon:"🗄️", title:"Self-hosted Database", desc:"PostgreSQL on your servers. Your market data, watchlists, and portfolio are never shared." },
+      ].map(f => (
+        <div class="p-6 rounded-2xl border border-void-600 bg-void-800/50 text-left">
+          <p class="text-3xl mb-4">{f.icon}</p>
+          <h3 class="text-white font-semibold mb-2">{f.title}</h3>
+          <p class="text-slate-500 text-sm leading-relaxed">{f.desc}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- ── ROADMAP ─────────────────────────────────────────────────────────── -->
+<section id="roadmap" class="py-32 px-6 border-t border-void-700/50">
+  <div class="max-w-3xl mx-auto">
+    <div class="text-center mb-16">
+      <p class="text-xs font-mono text-cyan-500 tracking-widest uppercase mb-3">Product Roadmap</p>
+      <h2 class="font-display text-5xl text-white">What's coming</h2>
+    </div>
+    <div class="space-y-4">
+      {[
+        { q:"Q1 2026", status:"done", items:["Live chart engine (Price, RSI, MACD, Volume)","Watchlist & Portfolio with PostgreSQL","Stock Screener with 6 presets","Multi-symbol comparison","WalletConnect SIWE auth"] },
+        { q:"Q2 2026", status:"done", items:["Qwen AI analyst with market context","Export CSV/XLSX","Multi-timeframe support (1H, 4H, Daily, Weekly)","Full API documentation (OpenAPI)"] },
+        { q:"Q3 2026", status:"active", items:["Real-time WebSocket price feeds","Price alert system (email + webhook)","Backtesting engine (simple strategies)","Mobile-responsive dashboard"] },
+        { q:"Q4 2026", status:"planned", items:["Multi-chain portfolio (Ethereum, Solana, Base)","On-chain DeFi position tracking","Team workspaces with access controls","White-label deployment"] },
+        { q:"2027", status:"planned", items:["Custom AI model fine-tuning","Automated strategy execution hooks","Regulatory reporting module","Multi-region database replication"] },
+      ].map(phase => (
+        <div class={`p-5 rounded-2xl border ${phase.status==="done"?"border-lime-500/20 bg-lime-500/5":phase.status==="active"?"border-cyan-500/30 bg-cyan-500/5":"border-void-600 bg-void-850"}`}>
+          <div class="flex items-center gap-3 mb-3">
+            <span class={`text-xs font-mono font-semibold tracking-widest px-2 py-0.5 rounded ${phase.status==="done"?"bg-lime-500/10 text-lime-400":phase.status==="active"?"bg-cyan-500/10 text-cyan-400":"text-slate-600 bg-void-600/50"}`}>
+              {phase.status==="done"?"✓ SHIPPED":phase.status==="active"?"⚡ IN PROGRESS":"◦ PLANNED"}
+            </span>
+            <span class="font-mono text-sm text-slate-400">{phase.q}</span>
+          </div>
+          <ul class="space-y-1">
+            {phase.items.map(item => (
+              <li class={`text-sm flex items-start gap-2 ${phase.status==="done"?"text-slate-300":phase.status==="active"?"text-cyan-200":"text-slate-600"}`}>
+                <span class="mt-0.5 shrink-0">{phase.status==="done"?"✓":phase.status==="active"?"›":"·"}</span>
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ─────────────────────────────────────────────────────────────── -->
+<section class="py-32 px-6 border-t border-void-700/50 text-center relative overflow-hidden">
+  <div class="absolute inset-0 bg-glow-hero opacity-50" />
+  <div class="relative z-10 max-w-2xl mx-auto">
+    <h2 class="font-display text-5xl text-white mb-6">Ready to gain the edge?</h2>
+    <p class="text-slate-400 mb-10 text-lg">Connect your wallet and access the full platform instantly. No sign-up. No subscription. Just connect.</p>
+    <a href="/login" class="inline-flex items-center gap-3 px-10 py-4 bg-cyan-500 text-void-900 rounded-xl font-bold text-base hover:bg-cyan-400 transition-all shadow-cyan">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      Connect Wallet & Start Trading
+    </a>
+  </div>
+</section>
+
+<!-- ── FOOTER ──────────────────────────────────────────────────────────── -->
+<footer class="border-t border-void-700/50 px-8 py-8">
+  <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+    <div class="flex items-center gap-2.5">
+      <img src="/logo.png" alt="Qwenta" class="w-6 h-6 rounded" />
+      <span class="text-slate-500 text-sm font-mono">Qwenta © 2026 — Enterprise Edition</span>
+    </div>
+    <div class="flex gap-6 text-sm text-slate-600">
+      <a href="/docs" class="hover:text-slate-400 transition-colors">Documentation</a>
+      <a href="/docs/api" class="hover:text-slate-400 transition-colors">API Reference</a>
+      <a href="/docs/changelog" class="hover:text-slate-400 transition-colors">Changelog</a>
+    </div>
+    <p class="text-[10px] font-mono text-slate-700">⚠ Not financial advice</p>
+  </div>
+</footer>
+
+<style>
+  .animate-slide-up { animation: slideUp 0.5s ease forwards; }
+  @keyframes slideUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+</style>
+</Base>
