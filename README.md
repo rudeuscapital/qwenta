@@ -1,6 +1,6 @@
 # Qwenta — Enterprise AI Trading Platform
 
-> Institutional-grade trading intelligence. VPS-deployed, AI-powered, crypto-authenticated.
+> Institutional-grade trading intelligence. AI-powered, crypto-authenticated.
 
 **Stack:** Astro SSR · React · PostgreSQL · Yahoo Finance · Ollama (Qwen) · WalletConnect/SIWE
 
@@ -16,7 +16,7 @@
 | 💼 Portfolio | P&L tracking, weighted avg cost, transaction history |
 | 🔎 Screener | Filter by 8+ indicator conditions, 5 built-in presets |
 | ↔ Compare | Normalize & compare up to 6 symbols |
-| 🤖 AI Analyst | Qwen via Ollama on VPS — private, streaming, context-aware |
+| 🤖 AI Analyst | Qwen via Ollama — private, streaming, context-aware |
 | 📥 Export | CSV & multi-sheet XLSX with all indicators |
 | 🔐 Auth | WalletConnect / MetaMask + SIWE (Sign-In with Ethereum) |
 | 📖 Docs | API reference, tutorials, changelog |

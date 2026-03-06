@@ -1,7 +1,7 @@
 ---
 import Base from "../layouts/Base.astro";
 ---
-<Base title="Enterprise AI Trading Platform" description="Qwenta — Institutional-grade trading intelligence powered by private AI on your VPS.">
+<Base title="Enterprise AI Trading Platform" description="Qwenta — Institutional-grade trading intelligence powered by private AI.">
 
 <!-- ── NAVBAR ─────────────────────────────────────────────────────────── -->
 <nav class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-4 border-b border-void-700/50 backdrop-blur-xl bg-void-900/80">
@@ -50,7 +50,7 @@ import Base from "../layouts/Base.astro";
     </h1>
 
     <p class="text-xl text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed animate-slide-up" style="animation-delay:0.2s;opacity:0">
-      Qwenta combines real-time market data, advanced technical analysis, portfolio tracking, and private AI — all deployed on your VPS. Built for enterprise teams who demand edge.
+      Qwenta combines real-time market data, advanced technical analysis, portfolio tracking, and private AI — all in one platform. Built for traders who demand edge.
     </p>
 
     <div class="flex flex-col sm:flex-row gap-4 justify-center animate-slide-up" style="animation-delay:0.3s;opacity:0">
@@ -101,7 +101,7 @@ import Base from "../layouts/Base.astro";
         { icon:"◎", title:"Portfolio Tracker", desc:"Track positions with weighted avg cost. Real-time unrealized P&L, transaction history, and portfolio-level summary.", color:"text-cyan-400" },
         { icon:"⊞", title:"Stock Screener", desc:"Filter entire market by RSI range, MACD direction, SMA cross, price range, daily change %. Six built-in presets.", color:"text-lime-400" },
         { icon:"⊟", title:"Multi-Symbol Compare", desc:"Normalize and compare up to 6 symbols on the same chart. Period-relative return overlay.", color:"text-cyan-400" },
-        { icon:"⬡", title:"Qwen AI Analyst", desc:"Private AI with full market context — OHLCV, indicators, fundamentals. Streaming responses. 100% on your VPS, no third-party cloud.", color:"text-lime-400" },
+        { icon:"⬡", title:"Qwen AI Analyst", desc:"Private AI with full market context — OHLCV, indicators, fundamentals. Streaming responses. 100% secure, no third-party access.", color:"text-lime-400" },
         { icon:"⤓", title:"Export CSV / XLSX", desc:"Export any symbol's full OHLCV + indicator data as CSV or multi-sheet Excel file.", color:"text-cyan-400" },
         { icon:"◊", title:"WalletConnect Auth", desc:"Sign-In with Ethereum (SIWE). One click with MetaMask, Phantom, Coinbase, or any WalletConnect-compatible wallet.", color:"text-lime-400" },
         { icon:"◻", title:"Full API Surface", desc:"Seven RESTful endpoints. Stock data, chat, watchlist, portfolio, screener, compare, export. Documented with OpenAPI.", color:"text-cyan-400" },
@@ -121,12 +121,12 @@ import Base from "../layouts/Base.astro";
   <div class="max-w-4xl mx-auto text-center">
     <p class="text-xs font-mono text-lime-400 tracking-widest uppercase mb-3">Enterprise Security</p>
     <h2 class="font-display text-5xl text-white mb-6">Private by architecture</h2>
-    <p class="text-slate-400 text-lg mb-16 leading-relaxed">No API keys sent to third parties. Your AI runs on your VPS via Ollama. Your data lives in your PostgreSQL. Your identity is your wallet.</p>
+    <p class="text-slate-400 text-lg mb-16 leading-relaxed">No API keys sent to third parties. AI runs on dedicated infrastructure via Ollama. Your data is never shared. Your identity is your wallet.</p>
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
       {[
         { icon:"🔐", title:"SIWE Authentication", desc:"Sign-In with Ethereum. Cryptographic proof of wallet ownership. No passwords, no email." },
-        { icon:"🖥️", title:"VPS-Hosted AI", desc:"Qwen runs on your VPS via Ollama. Zero data leaves your infrastructure." },
-        { icon:"🗄️", title:"Dedicated Database", desc:"PostgreSQL on your VPS. Your market data, watchlists, and portfolio are never shared." },
+        { icon:"🖥️", title:"Private AI Engine", desc:"Qwen runs on dedicated infrastructure via Ollama. Zero data leaves the platform." },
+        { icon:"🗄️", title:"Isolated Data Storage", desc:"Each wallet gets its own isolated data space. Your watchlists, portfolio, and trades are never shared." },
       ].map(f => (
         <div class="p-6 rounded-2xl border border-void-600 bg-void-800/50 text-left">
           <p class="text-3xl mb-4">{f.icon}</p>

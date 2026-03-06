@@ -14,7 +14,14 @@
       "Bash(for page in /docs /docs/getting-started /docs/changelog /docs/tutorials)",
       "Bash(do echo -n \"$page: \")",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" \"http://localhost:4321$page\")",
-      "Bash(done)"
+      "Bash(done)",
+      "Bash(node -e \"const yf = require\\(''yahoo-finance2''\\); console.log\\(Object.keys\\(yf.default || yf\\).filter\\(k => typeof \\(yf.default || yf\\)[k] === ''function''\\)\\)\")",
+      "Bash(node --input-type=module -e \"import yf from ''yahoo-finance2''; console.log\\(Object.getOwnPropertyNames\\(yf\\).filter\\(k => typeof yf[k] === ''function''\\)\\)\")",
+      "Bash(node --input-type=module -e \"import yf from ''yahoo-finance2''; console.log\\(Object.keys\\(yf\\)\\)\")",
+      "Bash(node --input-type=module -e \"import yf from ''yahoo-finance2''; console.log\\(typeof yf, typeof yf.quoteSummary, typeof yf.historical, typeof yf.quote, typeof yf.chart\\)\")",
+      "Bash(node --input-type=module -e \"import yf from ''yahoo-finance2''; const inst = yf\\(\\); console.log\\(typeof inst, Object.keys\\(inst\\)\\)\")",
+      "Bash(node --input-type=module -e \"import YF from ''yahoo-finance2''; const yf = new YF\\(\\); console.log\\(Object.getOwnPropertyNames\\(Object.getPrototypeOf\\(yf\\)\\).filter\\(k => k !== ''constructor''\\)\\)\")",
+      "Bash(node --input-type=module -e \"import YF from ''yahoo-finance2''; const yf = new YF\\(\\); const proto = Object.getPrototypeOf\\(yf\\); const keys = Object.getOwnPropertyNames\\(proto\\); console.log\\(keys\\)\")"
     ]
   }
 }

@@ -20,6 +20,7 @@ export default function WalletLogin() {
 
     const accounts = await eth.request({ method: "eth_requestAccounts" }) as string[];
     if (!accounts[0]) throw new Error("No account selected");
+    // Use the address exactly as returned by the wallet (already checksummed)
     const address = accounts[0];
 
     setStep("signing");
@@ -30,6 +31,7 @@ export default function WalletLogin() {
     const domain = window.location.host;
     const origin = window.location.origin;
     const issuedAt = new Date().toISOString();
+    // SIWE message must use the exact checksummed address the wallet expects
     const message = `${domain} wants you to sign in with your Ethereum account:\n${address}\n\nSign in to Qwenta Enterprise Platform\n\nURI: ${origin}\nVersion: 1\nChain ID: 1\nNonce: ${nonce}\nIssued At: ${issuedAt}`;
 
     const signature = await eth.request({ method: "personal_sign", params: [message, address] }) as string;
@@ -38,18 +40,15 @@ export default function WalletLogin() {
 
   const connectSolana = async () => {
     const win = window as any;
-    console.log("[Qwenta] phantom:", !!win.phantom, "phantom.solana:", !!win.phantom?.solana, "solana:", !!win.solana);
     const provider = win.phantom?.solana;
     if (!provider?.isPhantom) throw new Error("Phantom wallet not found. Please install Phantom.");
 
-    console.log("[Qwenta] Step 1: connecting...");
     let publicKey = provider.publicKey;
     if (!publicKey) {
       const resp = await provider.connect();
       publicKey = resp.publicKey;
     }
     const address = publicKey.toString();
-    console.log("[Qwenta] Step 2: connected, address:", address);
 
     setStep("signing");
 
@@ -60,10 +59,8 @@ export default function WalletLogin() {
     const issuedAt = new Date().toISOString();
     const message = `${domain} wants you to sign in with your Solana account:\n${address}\n\nSign in to Qwenta Enterprise Platform\n\nNonce: ${nonce}\nIssued At: ${issuedAt}`;
 
-    console.log("[Qwenta] Step 3: signing message...");
     const encoded = new TextEncoder().encode(message);
     const signResult = await provider.signMessage(encoded);
-    console.log("[Qwenta] Step 4: signed, result type:", typeof signResult, signResult);
     const sigBytes: Uint8Array = signResult?.signature ?? signResult;
 
     const bytes = new Uint8Array(sigBytes);
@@ -73,7 +70,6 @@ export default function WalletLogin() {
     }
     const signature = btoa(raw);
 
-    console.log("[Qwenta] Step 5: signature ready");
     return { address, message, signature };
   };
 
@@ -100,7 +96,6 @@ export default function WalletLogin() {
       setTimeout(() => { window.location.href = "/dashboard"; }, 800);
 
     } catch (e: any) {
-      console.error("[Qwenta] Error:", e);
       let msg = e?.message || "";
       if (e?.errors?.length) {
         msg = e.errors.map((err: any) => err?.message ?? String(err)).join("; ");

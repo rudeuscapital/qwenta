@@ -201,7 +201,7 @@ export default function TradingView({ wallet }:{ wallet:string }) {
         {/* AI Chat */}
         <div className="w-72 xl:w-80 border-l border-void-700 flex flex-col shrink-0">
           <div className="flex items-center justify-between px-4 py-2.5 border-b border-void-700 shrink-0">
-            <div className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"/><span className="text-[10px] font-mono font-semibold text-cyan-400 tracking-widest">NEXAI</span></div>
+            <div className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"/><span className="text-[10px] font-mono font-semibold text-cyan-400 tracking-widest">QWENAI</span></div>
             {msgs.length>0 && <button onClick={()=>setMsgs([])} className="text-[9px] font-mono text-void-500 hover:text-bear transition-colors">CLEAR</button>}
           </div>
           <div className="flex-1 overflow-y-auto p-3 space-y-3 min-h-0">
