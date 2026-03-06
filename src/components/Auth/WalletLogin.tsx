@@ -2,11 +2,49 @@ import { useState } from "react";
 
 type Step = "idle" | "connecting" | "signing" | "verifying" | "done" | "error";
 
+const WalletIcons: Record<string, JSX.Element> = {
+  metamask: (
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+      <path d="M27.2 3.6L18.4 10.4l1.6-3.8 7.2-3z" fill="#E2761B" stroke="#E2761B" strokeWidth=".1" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M4.8 3.6l8.7 6.9-1.5-3.9-7.2-3zM24 21.8l-2.3 3.6 5 1.4 1.4-4.9-4.1-.1zM3.9 21.9l1.4 4.9 5-1.4-2.3-3.6-4.1.1z" fill="#E4761B" stroke="#E4761B" strokeWidth=".1" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M10 14.2l-1.4 2.1 5 .2-.2-5.3-3.4 3zM22 14.2l-3.5-3.1-.1 5.4 5-.2-1.4-2.1zM12.7 25.4l3-1.5-2.6-2-.4 3.5zM16.3 23.9l3 1.5-.4-3.5-2.6 2z" fill="#E4761B" stroke="#E4761B" strokeWidth=".1" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M19.3 25.4l-3-1.5.2 1.7v.7l2.8-1zM12.7 25.4l2.8.9v-.7l.2-1.7-3 1.5z" fill="#D7C1B3" stroke="#D7C1B3" strokeWidth=".1" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M15.6 20.3l-2.5-.7 1.8-.8.7 1.5zM16.4 20.3l.7-1.5 1.8.8-2.5.7z" fill="#233447" stroke="#233447" strokeWidth=".1" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M12.7 25.4l.4-3.6-2.7.1 2.3 3.5zM18.9 21.8l.4 3.6 2.3-3.5-2.7-.1zM23.4 16.3l-5 .2.5 2.8.7-1.5 1.8.8 2-2.3zM13.1 18.8l1.8-.8.7 1.5.5-2.8-5-.2 2 2.3z" fill="#CD6116" stroke="#CD6116" strokeWidth=".1" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M8.6 16.3l2.1 4.1-.1-2-2-2.1zM21.4 18.4l-.1 2 2.1-4.1-2 2.1zM13.6 16.5l-.5 2.8.6 3 .1-2.2-1.3-3.6h1.1zM18.4 16.5l-1.2 3.6.1 2.2.6-3-.5-2.8z" fill="#E4751F" stroke="#E4751F" strokeWidth=".1" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M18.9 19.3l-.6 3 .4.3 2.6-2 .1-2-2.5.7zM13.1 18.6l.1 2 2.6 2 .4-.3-.6-3-2.5-.7z" fill="#F6851B" stroke="#F6851B" strokeWidth=".1" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M18.9 26.3v-.7l-.2-.2h-5.4l-.2.2v.7l-2.8-.9 1 .8 2 1.4h5.5l2-1.4 1-.8-2.9.9z" fill="#C0AD9E" stroke="#C0AD9E" strokeWidth=".1" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M16.3 23.9l-.4-.3h-2.3l-.4.3-.2 1.7 2.8-.9h.1l2.8.9-.2-1.7-.4-.3h-1.8z" fill="#161616" stroke="#161616" strokeWidth=".1" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M27.6 11l.7-3.5-1.1-3.5-8.9 6.6 3.4 2.9 4.8 1.4 1.1-1.2-.5-.3.7-.7-.5-.4.7-.5-.5-.4-.2.1zM3.7 7.5l.7 3.5-.5.3.8.5-.5.4.7.7-.5.3 1.1 1.2 4.8-1.4 3.4-2.9L4.8 3.6 3.7 7.5z" fill="#763D16" stroke="#763D16" strokeWidth=".1" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M26.5 14.9l-4.8-1.4 1.4 2.1-2.1 4.1 2.8 0h4.1l-1.4-4.8zM10.3 13.5l-4.8 1.4-1.6 4.8h4.1l2.8 0-2.1-4.1 1.6-2.1zM18.4 16.5l.3-5.3 1.4-3.8H12l1.4 3.8.3 5.3.1 1.4v3.5h2.4v-3.5l.2-1.4z" fill="#F6851B" stroke="#F6851B" strokeWidth=".1" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  ),
+  walletconnect: (
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+      <rect width="32" height="32" rx="6" fill="#3B99FC"/>
+      <path d="M10.1 12.8c3.3-3.2 8.5-3.2 11.8 0l.4.4c.2.2.2.4 0 .6l-1.3 1.2c-.1.1-.2.1-.3 0l-.5-.5c-2.3-2.2-5.9-2.2-8.2 0l-.6.5c-.1.1-.2.1-.3 0l-1.3-1.2c-.2-.2-.2-.4 0-.6l.3-.4zm14.6 2.7l1.1 1.1c.2.2.2.4 0 .6l-5.1 5c-.2.2-.4.2-.6 0l-3.6-3.5c0-.1-.1-.1-.1 0l-3.6 3.5c-.2.2-.4.2-.6 0l-5.1-5c-.2-.2-.2-.4 0-.6l1.1-1.1c.2-.2.4-.2.6 0l3.6 3.5c0 .1.1.1.1 0l3.6-3.5c.2-.2.4-.2.6 0l3.6 3.5c0 .1.1.1.1 0l3.6-3.5c.2-.2.5-.2.6 0z" fill="#fff"/>
+    </svg>
+  ),
+  coinbase: (
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+      <rect width="32" height="32" rx="6" fill="#0052FF"/>
+      <path fillRule="evenodd" clipRule="evenodd" d="M16 6C10.48 6 6 10.48 6 16s4.48 10 10 10 10-4.48 10-10S21.52 6 16 6zm-2.5 7.5a1 1 0 011-1h3a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-3z" fill="#fff"/>
+    </svg>
+  ),
+  phantom: (
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+      <rect width="32" height="32" rx="6" fill="url(#phantom_grad)"/>
+      <defs><linearGradient id="phantom_grad" x1="0" y1="0" x2="32" y2="32"><stop stopColor="#534BB1"/><stop offset="1" stopColor="#551BF9"/></linearGradient></defs>
+      <path d="M25.6 16.3c0 .3-.2.5-.5.5h-1.2c-.3 0-.5-.3-.5-.6.1-2.5-.8-4.5-2.8-5.9-1.5-1-3.2-1.3-5-1.1-2.6.3-4.6 1.8-5.8 4.1-.8 1.5-1 3.1-.7 4.8.5 2.8 2.8 5.2 5.6 5.7 1.2.2 2.3.1 3.4-.3.3-.1.5 0 .6.3l.4 1c.1.3 0 .5-.3.7-1.5.6-3 .8-4.6.5-4.2-.7-7.3-4-8-8.2-.4-2.2.1-4.3 1.1-6.2C9 8.8 12 7 15.3 7c2.3 0 4.4.8 6.1 2.4 1.8 1.7 2.9 3.8 3 6.3 0 .2 0 .4 0 .6h1.2zm-7.1.7c0 .8-.6 1.4-1.4 1.4s-1.4-.6-1.4-1.4.6-1.4 1.4-1.4 1.4.6 1.4 1.4zm-5 0c0 .8-.6 1.4-1.4 1.4s-1.4-.6-1.4-1.4.6-1.4 1.4-1.4 1.4.6 1.4 1.4z" fill="#fff"/>
+    </svg>
+  ),
+};
+
 const WALLET_OPTIONS = [
-  { id:"metamask",     name:"MetaMask",      icon:"🦊", desc:"Browser extension", chain:"evm" as const },
-  { id:"walletconnect",name:"WalletConnect", icon:"🔗", desc:"QR code / mobile",  chain:"evm" as const },
-  { id:"coinbase",     name:"Coinbase Wallet",icon:"🔵",desc:"Coinbase app",      chain:"evm" as const },
-  { id:"phantom",      name:"Phantom",       icon:"👻", desc:"Solana & EVM",      chain:"solana" as const },
+  { id:"metamask",     name:"MetaMask",      desc:"Browser extension", chain:"evm" as const },
+  { id:"walletconnect",name:"WalletConnect", desc:"QR code / mobile",  chain:"evm" as const },
+  { id:"coinbase",     name:"Coinbase Wallet",desc:"Coinbase app",      chain:"evm" as const },
+  { id:"phantom",      name:"Phantom",       desc:"Solana & EVM",      chain:"solana" as const },
 ];
 
 export default function WalletLogin() {
@@ -157,7 +195,7 @@ export default function WalletLogin() {
               {WALLET_OPTIONS.map((w) => (
                 <button key={w.id} onClick={() => connect(w.id)}
                   class="w-full flex items-center gap-4 px-4 py-3.5 rounded-xl border border-void-600 bg-void-850 hover:border-cyan-500/40 hover:bg-cyan-500/5 transition-all group">
-                  <span class="text-2xl">{w.icon}</span>
+                  <span class="shrink-0">{WalletIcons[w.id]}</span>
                   <div class="text-left">
                     <p class="text-white font-medium text-sm group-hover:text-cyan-300 transition-colors">{w.name}</p>
                     <p class="text-slate-600 text-xs">{w.desc}</p>
