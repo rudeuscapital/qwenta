@@ -2,7 +2,7 @@
 import { f as createComponent, j as renderComponent, r as renderTemplate, i as createAstro } from '../../chunks/astro/server_BVE5k6Zu.mjs';
 import 'kleur/colors';
 import { $ as $$Base } from '../../chunks/Base_NJ7nk25z.mjs';
-import { W as WatchlistView } from '../../chunks/Views_bR_vu94x.mjs';
+import { W as WatchlistView } from '../../chunks/Views_BWA3KGo0.mjs';
 import { a as getSessionFromRequest } from '../../chunks/auth_qwzUI1TQ.mjs';
 export { renderers } from '../../renderers.mjs';
 

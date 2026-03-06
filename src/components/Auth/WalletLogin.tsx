@@ -14,13 +14,37 @@ export default function WalletLogin() {
   const [error, setError] = useState<string | null>(null);
   const [selected, setSelected] = useState<string | null>(null);
 
-  const connectEVM = async () => {
-    const eth = (window as Window & { ethereum?: { request: (args: { method: string; params?: unknown[] }) => Promise<unknown> } }).ethereum;
-    if (!eth) throw new Error("No Ethereum provider found. Please install MetaMask.");
+  const getProvider = (walletId: string) => {
+    const win = window as any;
+    const ethereum = win.ethereum;
+    if (!ethereum) throw new Error("No Ethereum provider found. Please install a wallet extension.");
+
+    // When multiple wallets are installed, ethereum.providers contains all of them
+    const providers: any[] = ethereum.providers ?? [ethereum];
+
+    if (walletId === "metamask") {
+      const mm = providers.find((p: any) => p.isMetaMask && !p.isCoinbaseWallet);
+      if (mm) return mm;
+    }
+    if (walletId === "coinbase") {
+      // Coinbase may also inject as window.coinbaseWalletExtension
+      const cb = providers.find((p: any) => p.isCoinbaseWallet) ?? win.coinbaseWalletExtension;
+      if (cb) return cb;
+      throw new Error("Coinbase Wallet not found. Please install the Coinbase Wallet extension.");
+    }
+
+    // Fallback: use first available provider
+    return providers[0] ?? ethereum;
+  };
+
+  const connectEVM = async (walletId: string) => {
+    if (walletId === "walletconnect") {
+      throw new Error("WalletConnect requires scanning a QR code with a mobile wallet. Please use MetaMask, Coinbase Wallet, or Phantom browser extension instead.");
+    }
+    const eth = getProvider(walletId);
 
     const accounts = await eth.request({ method: "eth_requestAccounts" }) as string[];
     if (!accounts[0]) throw new Error("No account selected");
-    // Use the address exactly as returned by the wallet (already checksummed)
     const address = accounts[0];
 
     setStep("signing");
@@ -31,10 +55,10 @@ export default function WalletLogin() {
     const domain = window.location.host;
     const origin = window.location.origin;
     const issuedAt = new Date().toISOString();
-    // SIWE message must use the exact checksummed address the wallet expects
     const message = `${domain} wants you to sign in with your Ethereum account:\n${address}\n\nSign in to Qwenta Enterprise Platform\n\nURI: ${origin}\nVersion: 1\nChain ID: 1\nNonce: ${nonce}\nIssued At: ${issuedAt}`;
 
-    const signature = await eth.request({ method: "personal_sign", params: [message, address] }) as string;
+    // personal_sign params: [message, address] — address must match connected account
+    const signature = await eth.request({ method: "personal_sign", params: [message, address.toLowerCase()] }) as string;
     return { address, message, signature };
   };
 
@@ -80,7 +104,7 @@ export default function WalletLogin() {
 
     try {
       const wallet = WALLET_OPTIONS.find(w => w.id === walletId)!;
-      const result = wallet.chain === "solana" ? await connectSolana() : await connectEVM();
+      const result = wallet.chain === "solana" ? await connectSolana() : await connectEVM(walletId);
 
       setStep("verifying");
 

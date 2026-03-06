@@ -16,9 +16,27 @@ function WalletLogin() {
   const [step, setStep] = useState("idle");
   const [error, setError] = useState(null);
   const [selected, setSelected] = useState(null);
-  const connectEVM = async () => {
-    const eth = window.ethereum;
-    if (!eth) throw new Error("No Ethereum provider found. Please install MetaMask.");
+  const getProvider = (walletId) => {
+    const win = window;
+    const ethereum = win.ethereum;
+    if (!ethereum) throw new Error("No Ethereum provider found. Please install a wallet extension.");
+    const providers = ethereum.providers ?? [ethereum];
+    if (walletId === "metamask") {
+      const mm = providers.find((p) => p.isMetaMask && !p.isCoinbaseWallet);
+      if (mm) return mm;
+    }
+    if (walletId === "coinbase") {
+      const cb = providers.find((p) => p.isCoinbaseWallet) ?? win.coinbaseWalletExtension;
+      if (cb) return cb;
+      throw new Error("Coinbase Wallet not found. Please install the Coinbase Wallet extension.");
+    }
+    return providers[0] ?? ethereum;
+  };
+  const connectEVM = async (walletId) => {
+    if (walletId === "walletconnect") {
+      throw new Error("WalletConnect requires scanning a QR code with a mobile wallet. Please use MetaMask, Coinbase Wallet, or Phantom browser extension instead.");
+    }
+    const eth = getProvider(walletId);
     const accounts = await eth.request({ method: "eth_requestAccounts" });
     if (!accounts[0]) throw new Error("No account selected");
     const address = accounts[0];
@@ -38,7 +56,7 @@ Version: 1
 Chain ID: 1
 Nonce: ${nonce}
 Issued At: ${issuedAt}`;
-    const signature = await eth.request({ method: "personal_sign", params: [message, address] });
+    const signature = await eth.request({ method: "personal_sign", params: [message, address.toLowerCase()] });
     return { address, message, signature };
   };
   const connectSolana = async () => {
@@ -80,7 +98,7 @@ Issued At: ${issuedAt}`;
     setError(null);
     try {
       const wallet = WALLET_OPTIONS.find((w) => w.id === walletId);
-      const result = wallet.chain === "solana" ? await connectSolana() : await connectEVM();
+      const result = wallet.chain === "solana" ? await connectSolana() : await connectEVM(walletId);
       setStep("verifying");
       const authRes = await fetch("/api/auth", {
         method: "POST",

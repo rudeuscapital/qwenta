@@ -4,11 +4,11 @@ import Base from "../layouts/Base.astro";
 <Base title="Enterprise AI Trading Platform" description="Qwenta — Institutional-grade trading intelligence powered by private AI.">
 
 <!-- ── NAVBAR ─────────────────────────────────────────────────────────── -->
-<nav class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-4 border-b border-void-700/50 backdrop-blur-xl bg-void-900/80">
-  <a href="/" class="flex items-center gap-2.5">
-    <img src="/logo.png" alt="Qwenta" class="w-8 h-8 rounded-lg" />
-    <span class="font-display text-white text-lg italic">Qwenta</span>
-    <span class="text-[9px] font-mono text-cyan-500 border border-cyan-500/30 px-1.5 py-0.5 rounded tracking-widest">ENTERPRISE</span>
+<nav class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 md:px-8 py-3 md:py-4 border-b border-void-700/50 backdrop-blur-xl bg-void-900/80">
+  <a href="/" class="flex items-center gap-2">
+    <img src="/logo.png" alt="Qwenta" class="w-7 h-7 md:w-8 md:h-8 rounded-lg" />
+    <span class="font-display text-white text-base md:text-lg italic">Qwenta</span>
+    <span class="hidden sm:inline text-[9px] font-mono text-cyan-500 border border-cyan-500/30 px-1.5 py-0.5 rounded tracking-widest">ENTERPRISE</span>
   </a>
 
   <div class="hidden md:flex items-center gap-8 text-sm text-slate-400">
@@ -19,9 +19,10 @@ import Base from "../layouts/Base.astro";
     <a href="#roadmap" class="hover:text-cyan-400 transition-colors">Roadmap</a>
   </div>
 
-  <a href="/login" class="flex items-center gap-2 px-5 py-2 bg-cyan-500/10 border border-cyan-500/30 rounded-lg text-cyan-400 text-sm font-medium hover:bg-cyan-500/20 transition-all hover:shadow-cyan-sm">
+  <a href="/login" class="flex items-center gap-2 px-3 md:px-5 py-2 bg-cyan-500/10 border border-cyan-500/30 rounded-lg text-cyan-400 text-xs md:text-sm font-medium hover:bg-cyan-500/20 transition-all hover:shadow-cyan-sm">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-    Connect Wallet
+    <span class="hidden sm:inline">Connect Wallet</span>
+    <span class="sm:hidden">Connect</span>
   </a>
 </nav>
 
@@ -42,7 +43,7 @@ import Base from "../layouts/Base.astro";
     </div>
 
     <!-- Headline -->
-    <h1 class="font-display text-6xl md:text-8xl text-white mb-6 leading-none animate-slide-up" style="animation-delay:0.1s;opacity:0">
+    <h1 class="font-display text-4xl sm:text-6xl md:text-8xl text-white mb-6 leading-none animate-slide-up" style="animation-delay:0.1s;opacity:0">
       Trade with<br/>
       <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-lime-400">
         Institutional
@@ -50,7 +51,7 @@ import Base from "../layouts/Base.astro";
       Intelligence
     </h1>
 
-    <p class="text-xl text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed animate-slide-up" style="animation-delay:0.2s;opacity:0">
+    <p class="text-base sm:text-xl text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed animate-slide-up" style="animation-delay:0.2s;opacity:0">
       Qwenta combines real-time market data, advanced technical analysis, portfolio tracking, and private AI — all in one platform. Built for traders who demand edge.
     </p>
 
@@ -88,11 +89,11 @@ import Base from "../layouts/Base.astro";
 </section>
 
 <!-- ── FEATURES ────────────────────────────────────────────────────────── -->
-<section id="features" class="py-32 px-6 relative">
+<section id="features" class="py-16 sm:py-32 px-4 sm:px-6 relative">
   <div class="max-w-6xl mx-auto">
     <div class="text-center mb-20">
       <p class="text-xs font-mono text-cyan-500 tracking-widest uppercase mb-3">Platform Capabilities</p>
-      <h2 class="font-display text-5xl text-white">Everything you need<br/>to trade at the edge</h2>
+      <h2 class="font-display text-3xl sm:text-5xl text-white">Everything you need<br/>to trade at the edge</h2>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -118,10 +119,10 @@ import Base from "../layouts/Base.astro";
 </section>
 
 <!-- ── SECURITY ────────────────────────────────────────────────────────── -->
-<section id="security" class="py-32 px-6 border-t border-void-700/50">
+<section id="security" class="py-16 sm:py-32 px-4 sm:px-6 border-t border-void-700/50">
   <div class="max-w-4xl mx-auto text-center">
     <p class="text-xs font-mono text-lime-400 tracking-widest uppercase mb-3">Enterprise Security</p>
-    <h2 class="font-display text-5xl text-white mb-6">Private by architecture</h2>
+    <h2 class="font-display text-3xl sm:text-5xl text-white mb-6">Private by architecture</h2>
     <p class="text-slate-400 text-lg mb-16 leading-relaxed">No API keys sent to third parties. AI runs on dedicated infrastructure via Ollama. Your data is never shared. Your identity is your wallet.</p>
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
       {[
@@ -140,12 +141,12 @@ import Base from "../layouts/Base.astro";
 </section>
 
 <!-- ── MOBILE APP ──────────────────────────────────────────────────────── -->
-<section id="mobile" class="py-32 px-6 border-t border-void-700/50 relative overflow-hidden">
+<section id="mobile" class="py-16 sm:py-32 px-4 sm:px-6 border-t border-void-700/50 relative overflow-hidden">
   <div class="absolute inset-0 bg-glow-hero opacity-30" />
   <div class="max-w-5xl mx-auto relative z-10">
     <div class="text-center mb-16">
       <p class="text-xs font-mono text-cyan-500 tracking-widest uppercase mb-3">Mobile Experience</p>
-      <h2 class="font-display text-5xl text-white">Install Qwenta on<br/>your phone</h2>
+      <h2 class="font-display text-3xl sm:text-5xl text-white">Install Qwenta on<br/>your phone</h2>
       <p class="text-slate-400 text-lg mt-4 max-w-2xl mx-auto">Full trading dashboard in your pocket. Install as a native app — no app store needed.</p>
     </div>
 
@@ -189,17 +190,17 @@ import Base from "../layouts/Base.astro";
         </div>
         <div class="flex gap-3">
           <div class="flex-1 p-4 rounded-xl border border-void-600 bg-void-800/50 text-center">
-            <p class="text-2xl mb-1">🤖</p>
+            <svg class="w-7 h-7 mx-auto mb-1.5" viewBox="0 0 24 24" fill="none"><path d="M17.6 9.48l1.84-3.18a.39.39 0 00-.67-.39l-1.87 3.24A11.47 11.47 0 0012 8.01c-1.8 0-3.5.46-4.9 1.14L5.23 5.91a.39.39 0 00-.67.39L6.4 9.48A10.8 10.8 0 001 18h22a10.8 10.8 0 00-5.4-8.52zM7 15.25a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5zm10 0a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5z" fill="#3DDC84"/></svg>
             <p class="text-[10px] font-mono text-slate-400 tracking-widest">ANDROID</p>
             <p class="text-[9px] font-mono text-void-500 mt-0.5">Chrome 73+</p>
           </div>
           <div class="flex-1 p-4 rounded-xl border border-void-600 bg-void-800/50 text-center">
-            <p class="text-2xl mb-1">🍎</p>
+            <svg class="w-7 h-7 mx-auto mb-1.5" viewBox="0 0 24 24" fill="none"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" fill="#ffffff"/></svg>
             <p class="text-[10px] font-mono text-slate-400 tracking-widest">iOS</p>
             <p class="text-[9px] font-mono text-void-500 mt-0.5">Safari 14.1+</p>
           </div>
           <div class="flex-1 p-4 rounded-xl border border-void-600 bg-void-800/50 text-center">
-            <p class="text-2xl mb-1">💻</p>
+            <svg class="w-7 h-7 mx-auto mb-1.5" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10.5" stroke="#4285F4" stroke-width="1.5" fill="none"/><path d="M21.35 11.1H12v2.85h5.35c-.5 2.45-2.6 3.75-5.35 3.75a5.9 5.9 0 01-5.9-5.9A5.9 5.9 0 0112 5.9c1.45 0 2.8.55 3.8 1.45l2.15-2.15A9.7 9.7 0 0012 2.25c-5.4 0-9.75 4.35-9.75 9.75S6.6 21.75 12 21.75c4.95 0 9.3-3.6 9.3-9.75 0-.6-.05-1.2-.15-1.75z" fill="#4285F4"/><path d="M3.65 7.35l2.5 1.85A5.85 5.85 0 0112 5.9c1.45 0 2.8.55 3.8 1.45l2.15-2.15A9.7 9.7 0 0012 2.25 9.72 9.72 0 003.65 7.35z" fill="#EA4335"/><path d="M12 21.75c2.55 0 4.85-.85 6.6-2.3l-2.35-1.95c-.95.7-2.15 1.1-3.45 1.3v.01c-2.7-.05-5-1.8-5.75-4.3l-2.5 1.95A9.72 9.72 0 0012 21.75z" fill="#34A853"/><path d="M3.65 16.65l2.5-1.95a5.85 5.85 0 01-.3-1.9c0-.65.1-1.3.3-1.9l-2.5-1.85A9.65 9.65 0 002.25 12c0 1.7.45 3.3 1.2 4.7z" fill="#FBBC05"/></svg>
             <p class="text-[10px] font-mono text-slate-400 tracking-widest">DESKTOP</p>
             <p class="text-[9px] font-mono text-void-500 mt-0.5">Chrome / Edge</p>
           </div>
@@ -210,11 +211,11 @@ import Base from "../layouts/Base.astro";
 </section>
 
 <!-- ── ROADMAP ─────────────────────────────────────────────────────────── -->
-<section id="roadmap" class="py-32 px-6 border-t border-void-700/50">
+<section id="roadmap" class="py-16 sm:py-32 px-4 sm:px-6 border-t border-void-700/50">
   <div class="max-w-3xl mx-auto">
     <div class="text-center mb-16">
       <p class="text-xs font-mono text-cyan-500 tracking-widest uppercase mb-3">Product Roadmap</p>
-      <h2 class="font-display text-5xl text-white">What's coming</h2>
+      <h2 class="font-display text-3xl sm:text-5xl text-white">What's coming</h2>
     </div>
     <div class="space-y-4">
       {[
@@ -246,10 +247,10 @@ import Base from "../layouts/Base.astro";
 </section>
 
 <!-- ── CTA ─────────────────────────────────────────────────────────────── -->
-<section class="py-32 px-6 border-t border-void-700/50 text-center relative overflow-hidden">
+<section class="py-16 sm:py-32 px-4 sm:px-6 border-t border-void-700/50 text-center relative overflow-hidden">
   <div class="absolute inset-0 bg-glow-hero opacity-50" />
   <div class="relative z-10 max-w-2xl mx-auto">
-    <h2 class="font-display text-5xl text-white mb-6">Ready to gain the edge?</h2>
+    <h2 class="font-display text-3xl sm:text-5xl text-white mb-6">Ready to gain the edge?</h2>
     <p class="text-slate-400 mb-10 text-lg">Connect your wallet and access the full platform instantly. No sign-up. No subscription. Just connect.</p>
     <a href="/login" class="inline-flex items-center gap-3 px-10 py-4 bg-cyan-500 text-void-900 rounded-xl font-bold text-base hover:bg-cyan-400 transition-all shadow-cyan">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>

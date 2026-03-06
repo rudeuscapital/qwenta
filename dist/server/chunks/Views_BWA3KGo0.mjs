@@ -1,6 +1,6 @@
 import { jsxs, jsx, Fragment } from 'react/jsx-runtime';
 import { useState, useEffect } from 'react';
-import { D as DashboardLayout } from './Layout_BYqzR0aw.mjs';
+import { D as DashboardLayout } from './Layout_L-6bpj3S.mjs';
 import { ResponsiveContainer, LineChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Line } from 'recharts';
 
 const fB = (n) => n >= 1e12 ? `$${(n / 1e12).toFixed(1)}T` : n >= 1e9 ? `$${(n / 1e9).toFixed(1)}B` : n >= 1e6 ? `$${(n / 1e6).toFixed(0)}M` : "—";
@@ -32,9 +32,9 @@ function WatchlistView({ wallet }) {
   useEffect(() => {
     if (activeId) loadItems(activeId);
   }, [activeId]);
-  return /* @__PURE__ */ jsx(DashboardLayout, { active: "/dashboard/watchlist", wallet, children: /* @__PURE__ */ jsxs("div", { className: "flex h-full overflow-hidden", children: [
-    /* @__PURE__ */ jsxs("div", { className: "w-48 border-r border-void-700 bg-void-850 flex flex-col shrink-0", children: [
-      /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between px-4 py-3 border-b border-void-700", children: [
+  return /* @__PURE__ */ jsx(DashboardLayout, { active: "/dashboard/watchlist", wallet, children: /* @__PURE__ */ jsxs("div", { className: "flex flex-col md:flex-row h-full overflow-hidden", children: [
+    /* @__PURE__ */ jsxs("div", { className: "md:w-48 border-b md:border-b-0 md:border-r border-void-700 bg-void-850 flex flex-col shrink-0", children: [
+      /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between px-4 py-2 md:py-3 border-b border-void-700", children: [
         /* @__PURE__ */ jsx("span", { className: "text-[10px] font-mono text-cyan-400 tracking-widest font-semibold", children: "WATCHLISTS" }),
         /* @__PURE__ */ jsx("button", { onClick: () => setShowNew(true), className: "text-void-500 hover:text-cyan-400 text-base transition-colors", children: "+" })
       ] }),
@@ -65,20 +65,20 @@ function WatchlistView({ wallet }) {
           }
         }, className: "w-full px-2 py-1 bg-cyan-500/10 border border-cyan-500/30 rounded text-cyan-400 text-[9px] font-mono", children: "CREATE" })
       ] }),
-      /* @__PURE__ */ jsx("div", { className: "flex-1 overflow-y-auto py-2", children: lists.map((l) => /* @__PURE__ */ jsx(
+      /* @__PURE__ */ jsx("div", { className: "flex md:flex-col overflow-x-auto md:overflow-y-auto py-1 md:py-2 px-1 md:px-0 gap-1 md:gap-0 md:flex-1", children: lists.map((l) => /* @__PURE__ */ jsx(
         "div",
         {
           onClick: () => setActiveId(l.id),
-          className: `flex items-center px-3 py-2 cursor-pointer transition-colors ${activeId === l.id ? "bg-cyan-500/10 border-r-2 border-cyan-400" : "hover:bg-void-800"}`,
+          className: `flex items-center px-3 py-1.5 md:py-2 cursor-pointer transition-colors whitespace-nowrap rounded md:rounded-none shrink-0 ${activeId === l.id ? "bg-cyan-500/10 md:border-r-2 border-cyan-400" : "hover:bg-void-800"}`,
           children: /* @__PURE__ */ jsx("span", { className: `text-xs font-sans ${activeId === l.id ? "text-cyan-300" : "text-slate-400"}`, children: l.name })
         },
         l.id
       )) })
     ] }),
-    /* @__PURE__ */ jsxs("div", { className: "flex-1 flex flex-col overflow-hidden", children: [
-      /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 px-5 py-2.5 border-b border-void-700 bg-void-850 shrink-0", children: [
-        /* @__PURE__ */ jsx("input", { value: newSym, onChange: (e) => setNewSym(e.target.value.toUpperCase()), placeholder: "Symbol", className: "bg-void-800 border border-void-700 rounded-lg px-3 py-1.5 text-xs font-mono text-cyan-300 placeholder-void-500 w-28 focus:outline-none focus:border-cyan-500/40 uppercase" }),
-        /* @__PURE__ */ jsx("input", { value: newNotes, onChange: (e) => setNewNotes(e.target.value), placeholder: "Notes (optional)", className: "flex-1 bg-void-800 border border-void-700 rounded-lg px-3 py-1.5 text-xs font-mono text-slate-300 placeholder-void-500 focus:outline-none focus:border-cyan-500/40" }),
+    /* @__PURE__ */ jsxs("div", { className: "flex-1 flex flex-col overflow-hidden min-h-0", children: [
+      /* @__PURE__ */ jsxs("div", { className: "flex flex-wrap items-center gap-2 px-3 md:px-5 py-2 md:py-2.5 border-b border-void-700 bg-void-850 shrink-0", children: [
+        /* @__PURE__ */ jsx("input", { value: newSym, onChange: (e) => setNewSym(e.target.value.toUpperCase()), placeholder: "Symbol", className: "bg-void-800 border border-void-700 rounded-lg px-3 py-1.5 text-xs font-mono text-cyan-300 placeholder-void-500 w-24 md:w-28 focus:outline-none focus:border-cyan-500/40 uppercase" }),
+        /* @__PURE__ */ jsx("input", { value: newNotes, onChange: (e) => setNewNotes(e.target.value), placeholder: "Notes", className: "flex-1 min-w-[80px] bg-void-800 border border-void-700 rounded-lg px-3 py-1.5 text-xs font-mono text-slate-300 placeholder-void-500 focus:outline-none focus:border-cyan-500/40" }),
         /* @__PURE__ */ jsx(
           "button",
           {
@@ -161,20 +161,20 @@ function PortfolioView({ wallet }) {
     loadPortfolio(activeId);
   };
   return /* @__PURE__ */ jsxs(DashboardLayout, { active: "/dashboard/portfolio", wallet, children: [
-    /* @__PURE__ */ jsxs("header", { className: "flex items-center gap-3 px-5 py-2.5 border-b border-void-700 bg-void-850 shrink-0", children: [
+    /* @__PURE__ */ jsxs("header", { className: "flex items-center gap-2 md:gap-3 px-3 md:px-5 py-2 md:py-2.5 border-b border-void-700 bg-void-850 shrink-0 flex-wrap", children: [
       /* @__PURE__ */ jsx("span", { className: "text-[10px] font-mono text-cyan-400 tracking-widest font-semibold", children: "PORTFOLIO" }),
       /* @__PURE__ */ jsxs("div", { className: "flex gap-1.5 overflow-x-auto", children: [
-        portfolios.map((p) => /* @__PURE__ */ jsx("button", { onClick: () => setActiveId(p.id), className: `px-2.5 py-1 text-[10px] font-mono rounded transition-colors border ${activeId === p.id ? "bg-cyan-500/15 text-cyan-400 border-cyan-500/30" : "text-void-500 border-void-700 hover:text-slate-400"}`, children: p.name }, p.id)),
+        portfolios.map((p) => /* @__PURE__ */ jsx("button", { onClick: () => setActiveId(p.id), className: `px-2.5 py-1 text-[10px] font-mono rounded transition-colors border whitespace-nowrap ${activeId === p.id ? "bg-cyan-500/15 text-cyan-400 border-cyan-500/30" : "text-void-500 border-void-700 hover:text-slate-400"}`, children: p.name }, p.id)),
         /* @__PURE__ */ jsx("button", { onClick: async () => {
           const n = prompt("Portfolio name:");
           if (!n) return;
           await post({ action: "create", name: n });
           loadPortfolios();
-        }, className: "px-2 py-1 text-[10px] font-mono text-void-500 border border-void-700 rounded hover:text-cyan-400 transition-colors", children: "+ NEW" })
+        }, className: "px-2 py-1 text-[10px] font-mono text-void-500 border border-void-700 rounded hover:text-cyan-400 transition-colors whitespace-nowrap", children: "+ NEW" })
       ] }),
       /* @__PURE__ */ jsx("div", { className: "ml-auto", children: /* @__PURE__ */ jsx("button", { onClick: () => setShowTrade(true), className: "px-3 py-1.5 bg-bull/10 border border-bull/30 rounded-lg text-bull text-[10px] font-mono hover:bg-bull/20 transition-colors", children: "+ TRADE" }) })
     ] }),
-    summary && /* @__PURE__ */ jsx("div", { className: "flex gap-3 px-5 py-2.5 border-b border-void-700 bg-void-900/50 shrink-0 overflow-x-auto", children: [
+    summary && /* @__PURE__ */ jsx("div", { className: "flex gap-2 md:gap-3 px-3 md:px-5 py-2 md:py-2.5 border-b border-void-700 bg-void-900/50 shrink-0 overflow-x-auto", children: [
       ["Total Value", `$${summary.totalValue.toFixed(2)}`, "text-white"],
       ["Total Cost", `$${summary.totalCost.toFixed(2)}`, "text-slate-400"],
       ["Unrealized P&L", `${summary.totalPnl >= 0 ? "+" : ""}$${Math.abs(summary.totalPnl).toFixed(2)}`, summary.totalPnl >= 0 ? "text-bull" : "text-bear"],
@@ -184,8 +184,8 @@ function PortfolioView({ wallet }) {
       /* @__PURE__ */ jsx("p", { className: "text-[9px] font-mono text-void-500 uppercase tracking-widest", children: l }),
       /* @__PURE__ */ jsx("p", { className: `text-sm font-mono font-semibold mt-0.5 ${c}`, children: v })
     ] }, l)) }),
-    /* @__PURE__ */ jsx("div", { className: "flex gap-1 px-5 py-2 border-b border-void-700 bg-void-850 shrink-0", children: ["positions", "transactions"].map((t) => /* @__PURE__ */ jsx("button", { onClick: () => setView(t), className: `px-3 py-1 text-[9px] font-mono uppercase tracking-widest rounded transition-colors ${view === t ? "bg-cyan-500/10 text-cyan-400 border border-cyan-500/20" : "text-void-500 hover:text-slate-400"}`, children: t }, t)) }),
-    /* @__PURE__ */ jsx("div", { className: "flex-1 overflow-auto", children: view === "positions" ? /* @__PURE__ */ jsxs("table", { className: "w-full text-xs font-mono", children: [
+    /* @__PURE__ */ jsx("div", { className: "flex gap-1 px-3 md:px-5 py-2 border-b border-void-700 bg-void-850 shrink-0", children: ["positions", "transactions"].map((t) => /* @__PURE__ */ jsx("button", { onClick: () => setView(t), className: `px-3 py-1 text-[9px] font-mono uppercase tracking-widest rounded transition-colors ${view === t ? "bg-cyan-500/10 text-cyan-400 border border-cyan-500/20" : "text-void-500 hover:text-slate-400"}`, children: t }, t)) }),
+    /* @__PURE__ */ jsx("div", { className: "flex-1 overflow-auto", children: view === "positions" ? /* @__PURE__ */ jsx("div", { className: "overflow-x-auto min-w-0", children: /* @__PURE__ */ jsxs("table", { className: "w-full text-xs font-mono min-w-[700px]", children: [
       /* @__PURE__ */ jsx("thead", { className: "sticky top-0 bg-void-850 border-b border-void-700", children: /* @__PURE__ */ jsx("tr", { children: ["SYMBOL", "SHARES", "AVG COST", "CURRENT", "MKT VALUE", "COST BASIS", "P&L", "RETURN", "DAY %"].map((h) => /* @__PURE__ */ jsx("th", { className: "text-left px-4 py-2 text-[9px] text-void-500 tracking-widest", children: h }, h)) }) }),
       /* @__PURE__ */ jsx("tbody", { children: positions.length === 0 ? /* @__PURE__ */ jsx("tr", { children: /* @__PURE__ */ jsx("td", { colSpan: 9, className: "px-4 py-8 text-center text-void-600 text-sm", children: "No positions. Record a trade to start." }) }) : positions.map((p, i) => /* @__PURE__ */ jsxs("tr", { className: `border-b border-void-800 hover:bg-void-800/40 transition-colors ${i % 2 === 0 ? "" : "bg-void-900/20"}`, children: [
         /* @__PURE__ */ jsx("td", { className: "px-4 py-2.5 text-cyan-400 font-semibold", children: p.symbol }),
@@ -222,7 +222,7 @@ function PortfolioView({ wallet }) {
           "%"
         ] })
       ] }, p.id)) })
-    ] }) : /* @__PURE__ */ jsxs("table", { className: "w-full text-xs font-mono", children: [
+    ] }) }) : /* @__PURE__ */ jsx("div", { className: "overflow-x-auto min-w-0", children: /* @__PURE__ */ jsxs("table", { className: "w-full text-xs font-mono min-w-[600px]", children: [
       /* @__PURE__ */ jsx("thead", { className: "sticky top-0 bg-void-850 border-b border-void-700", children: /* @__PURE__ */ jsx("tr", { children: ["DATE", "SYMBOL", "TYPE", "SHARES", "PRICE", "FEE", "TOTAL", "NOTES"].map((h) => /* @__PURE__ */ jsx("th", { className: "text-left px-4 py-2 text-[9px] text-void-500 tracking-widest", children: h }, h)) }) }),
       /* @__PURE__ */ jsx("tbody", { children: transactions.length === 0 ? /* @__PURE__ */ jsx("tr", { children: /* @__PURE__ */ jsx("td", { colSpan: 8, className: "px-4 py-8 text-center text-void-600 text-sm", children: "No transactions yet." }) }) : transactions.map((tx, i) => /* @__PURE__ */ jsxs("tr", { className: `border-b border-void-800 hover:bg-void-800/40 transition-colors ${i % 2 === 0 ? "" : "bg-void-900/20"}`, children: [
         /* @__PURE__ */ jsx("td", { className: "px-4 py-2.5 text-slate-400", children: new Date(tx.executed_at).toLocaleDateString() }),
@@ -243,8 +243,8 @@ function PortfolioView({ wallet }) {
         ] }),
         /* @__PURE__ */ jsx("td", { className: "px-4 py-2.5 text-void-500 text-[9px]", children: tx.notes })
       ] }, tx.id)) })
-    ] }) }),
-    showTrade && /* @__PURE__ */ jsx("div", { className: "fixed inset-0 bg-void-900/80 backdrop-blur-sm flex items-center justify-center z-50 animate-fade-in", children: /* @__PURE__ */ jsxs("div", { className: "bg-void-850 border border-void-600 rounded-2xl p-6 w-96 shadow-panel", children: [
+    ] }) }) }),
+    showTrade && /* @__PURE__ */ jsx("div", { className: "fixed inset-0 bg-void-900/80 backdrop-blur-sm flex items-center justify-center z-50 animate-fade-in p-4", children: /* @__PURE__ */ jsxs("div", { className: "bg-void-850 border border-void-600 rounded-2xl p-5 md:p-6 w-full max-w-sm shadow-panel", children: [
       /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-center mb-5", children: [
         /* @__PURE__ */ jsx("h2", { className: "text-white font-display italic text-xl", children: "Record Trade" }),
         /* @__PURE__ */ jsx("button", { onClick: () => setShowTrade(false), className: "text-void-500 hover:text-slate-400", children: "✕" })
@@ -312,9 +312,9 @@ function ScreenerView({ wallet }) {
     l,
     sortBy === k ? sortDir === -1 ? " ↓" : " ↑" : ""
   ] });
-  return /* @__PURE__ */ jsx(DashboardLayout, { active: "/dashboard/screener", wallet, children: /* @__PURE__ */ jsxs("div", { className: "flex h-full overflow-hidden", children: [
-    /* @__PURE__ */ jsxs("div", { className: "w-60 border-r border-void-700 bg-void-850 flex flex-col shrink-0 overflow-y-auto", children: [
-      /* @__PURE__ */ jsx("div", { className: "px-4 py-3 border-b border-void-700", children: /* @__PURE__ */ jsx("p", { className: "text-[10px] font-mono text-cyan-400 tracking-widest font-semibold", children: "FILTERS" }) }),
+  return /* @__PURE__ */ jsx(DashboardLayout, { active: "/dashboard/screener", wallet, children: /* @__PURE__ */ jsxs("div", { className: "flex flex-col md:flex-row h-full overflow-hidden", children: [
+    /* @__PURE__ */ jsxs("div", { className: "md:w-60 border-b md:border-b-0 md:border-r border-void-700 bg-void-850 flex flex-col shrink-0 max-h-48 md:max-h-none overflow-y-auto", children: [
+      /* @__PURE__ */ jsx("div", { className: "px-4 py-2 md:py-3 border-b border-void-700", children: /* @__PURE__ */ jsx("p", { className: "text-[10px] font-mono text-cyan-400 tracking-widest font-semibold", children: "FILTERS" }) }),
       /* @__PURE__ */ jsxs("div", { className: "px-4 py-3 space-y-4", children: [
         /* @__PURE__ */ jsxs("div", { children: [
           /* @__PURE__ */ jsx("p", { className: "text-[9px] font-mono text-void-500 uppercase tracking-widest mb-2", children: "Quick Presets" }),
@@ -479,8 +479,8 @@ function NewsView({ wallet }) {
         s
       )) })
     ] }),
-    /* @__PURE__ */ jsxs("div", { className: "flex-1 flex overflow-hidden min-h-0", children: [
-      /* @__PURE__ */ jsxs("div", { className: "w-72 border-r border-void-700 bg-void-850 flex flex-col shrink-0", children: [
+    /* @__PURE__ */ jsxs("div", { className: "flex-1 flex flex-col md:flex-row overflow-hidden min-h-0", children: [
+      /* @__PURE__ */ jsxs("div", { className: "md:w-72 border-b md:border-b-0 md:border-r border-void-700 bg-void-850 flex flex-col shrink-0 max-h-52 md:max-h-none", children: [
         /* @__PURE__ */ jsxs("div", { className: "px-4 py-3 border-b border-void-700", children: [
           /* @__PURE__ */ jsx("p", { className: "text-[10px] font-mono text-cyan-400 tracking-widest font-semibold", children: "AI SENTIMENT" }),
           /* @__PURE__ */ jsx("p", { className: "text-[9px] font-mono text-void-500 mt-0.5", children: "Powered by QwenAI" })
@@ -604,7 +604,7 @@ function CompareView({ wallet }) {
   }
   const ok = data.filter((d) => !d.error);
   return /* @__PURE__ */ jsxs(DashboardLayout, { active: "/dashboard/compare", wallet, children: [
-    /* @__PURE__ */ jsxs("header", { className: "flex items-center gap-3 px-5 py-2.5 border-b border-void-700 bg-void-850 shrink-0 flex-wrap", children: [
+    /* @__PURE__ */ jsxs("header", { className: "flex items-center gap-2 md:gap-3 px-3 md:px-5 py-2 md:py-2.5 border-b border-void-700 bg-void-850 shrink-0 flex-wrap", children: [
       /* @__PURE__ */ jsx("span", { className: "text-[10px] font-mono text-cyan-400 tracking-widest font-semibold", children: "COMPARE" }),
       /* @__PURE__ */ jsx("div", { className: "flex gap-1.5 flex-wrap", children: symbols.map((s, i) => /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-1.5 px-2.5 py-1 rounded border text-[10px] font-mono", style: { borderColor: COLORS[i] + "60", backgroundColor: COLORS[i] + "12", color: COLORS[i] }, children: [
         s,
@@ -627,7 +627,7 @@ function CompareView({ wallet }) {
       /* @__PURE__ */ jsx("div", { className: "flex gap-1", children: ["1mo", "3mo", "6mo", "1y", "2y"].map((p) => /* @__PURE__ */ jsx("button", { onClick: () => setPeriod(p), className: `px-2 py-1 text-[9px] font-mono rounded transition-colors ${period === p ? "bg-void-700 text-cyan-400" : "text-void-500 hover:text-slate-400"}`, children: p.toUpperCase() }, p)) }),
       /* @__PURE__ */ jsx("button", { onClick: compare, disabled: symbols.length < 2 || loading, className: "px-4 py-1.5 bg-cyan-500/10 border border-cyan-500/30 rounded-lg text-cyan-400 text-[10px] font-mono hover:bg-cyan-500/20 disabled:opacity-40 transition-colors", children: loading ? "LOADING..." : "COMPARE" })
     ] }),
-    /* @__PURE__ */ jsxs("div", { className: "flex-1 flex flex-col p-4 gap-4 overflow-hidden min-h-0", children: [
+    /* @__PURE__ */ jsxs("div", { className: "flex-1 flex flex-col p-2 md:p-4 gap-3 md:gap-4 overflow-hidden min-h-0", children: [
       loading && /* @__PURE__ */ jsx("div", { className: "flex-1 flex items-center justify-center", children: /* @__PURE__ */ jsx("div", { className: "flex gap-1", children: [0, 1, 2].map((i) => /* @__PURE__ */ jsx("span", { className: "w-2 h-2 rounded-full bg-cyan-400 animate-pulse-dot", style: { animationDelay: `${i * 0.16}s` } }, i)) }) }),
       !loading && chartData.length > 0 && /* @__PURE__ */ jsxs(Fragment, { children: [
         /* @__PURE__ */ jsxs("div", { className: "flex-1 min-h-0", children: [
@@ -641,7 +641,7 @@ function CompareView({ wallet }) {
             ok.map((d, i) => /* @__PURE__ */ jsx(Line, { dataKey: d.symbol, stroke: COLORS[i], strokeWidth: 1.5, dot: false, connectNulls: true }, d.symbol))
           ] }) })
         ] }),
-        ok.length > 0 && /* @__PURE__ */ jsx("div", { className: "shrink-0", children: /* @__PURE__ */ jsxs("table", { className: "w-full text-xs font-mono", children: [
+        ok.length > 0 && /* @__PURE__ */ jsx("div", { className: "shrink-0 overflow-x-auto", children: /* @__PURE__ */ jsxs("table", { className: "w-full text-xs font-mono min-w-[500px]", children: [
           /* @__PURE__ */ jsx("thead", { children: /* @__PURE__ */ jsx("tr", { className: "border-b border-void-700", children: ["SYMBOL", "NAME", "CURRENT", "PERIOD RETURN", "DAY %"].map((h) => /* @__PURE__ */ jsx("th", { className: "text-left px-4 py-2 text-[9px] text-void-500 tracking-widest", children: h }, h)) }) }),
           /* @__PURE__ */ jsx("tbody", { children: ok.map((d, i) => {
             const ret = d.normalized.at(-1)?.value ?? 0, day = (d.quote?.regularMarketChangePercent ?? 0) * 100;
@@ -669,7 +669,7 @@ function CompareView({ wallet }) {
       !loading && chartData.length === 0 && /* @__PURE__ */ jsxs("div", { className: "flex-1 flex flex-col items-center justify-center gap-3", children: [
         /* @__PURE__ */ jsx("p", { className: "text-void-600 font-display text-2xl italic", children: "Multi-Symbol Comparison" }),
         /* @__PURE__ */ jsx("p", { className: "text-[10px] font-mono text-void-600", children: "Add symbols above and click COMPARE" }),
-        /* @__PURE__ */ jsx("div", { className: "flex gap-2 mt-2", children: [["AAPL", "NVDA", "MSFT"], ["BTC-USD", "ETH-USD", "SOL-USD"], ["SPY", "QQQ", "IWM"]].map((g) => /* @__PURE__ */ jsx("button", { onClick: () => setSymbols(g), className: "px-3 py-1.5 bg-void-800 border border-void-700 rounded text-[10px] font-mono text-slate-400 hover:text-cyan-300 hover:border-cyan-500/30 transition-colors", children: g.join(" vs ") }, g.join())) })
+        /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-2 mt-2 justify-center", children: [["AAPL", "NVDA", "MSFT"], ["BTC-USD", "ETH-USD", "SOL-USD"], ["SPY", "QQQ", "IWM"]].map((g) => /* @__PURE__ */ jsx("button", { onClick: () => setSymbols(g), className: "px-3 py-1.5 bg-void-800 border border-void-700 rounded text-[10px] font-mono text-slate-400 hover:text-cyan-300 hover:border-cyan-500/30 transition-colors", children: g.join(" vs ") }, g.join())) })
       ] })
     ] })
   ] });

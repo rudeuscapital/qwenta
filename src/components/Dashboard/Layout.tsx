@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const NAV = [
   { href:"/dashboard",            icon:"◈", label:"Dashboard" },
@@ -20,6 +20,10 @@ interface Props { active: string; children: React.ReactNode; wallet?: string }
 
 export default function DashboardLayout({ active, children, wallet }: Props) {
   const [collapsed, setCollapsed] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  // Close mobile drawer on route-like clicks
+  useEffect(() => { setMobileOpen(false); }, [active]);
 
   const logout = async () => {
     await fetch("/api/auth", { method: "DELETE" });
@@ -28,22 +32,30 @@ export default function DashboardLayout({ active, children, wallet }: Props) {
 
   return (
     <div class="flex h-screen overflow-hidden bg-void-900">
+      {/* Mobile overlay */}
+      {mobileOpen && <div class="fixed inset-0 bg-void-900/70 z-40 md:hidden" onClick={() => setMobileOpen(false)} />}
+
       {/* Sidebar */}
-      <aside class={`flex flex-col border-r border-void-700 bg-void-850 shrink-0 transition-all duration-200 ${collapsed ? "w-14" : "w-52"}`}>
+      <aside class={`
+        flex flex-col border-r border-void-700 bg-void-850 shrink-0 transition-all duration-200
+        fixed md:relative inset-y-0 left-0 z-50
+        ${mobileOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0
+        ${collapsed ? "w-14" : "w-52"}
+      `}>
         {/* Logo */}
         <div class="flex items-center gap-3 px-4 py-4 border-b border-void-700">
           <a href="/" class="flex items-center gap-2 shrink-0">
             <img src="/logo.png" alt="Qwenta" class="w-7 h-7 rounded-lg shrink-0" />
             {!collapsed && <span class="font-display text-white text-sm italic">Qwenta</span>}
           </a>
-          <button onClick={() => setCollapsed(!collapsed)}
+          <button onClick={() => { if (window.innerWidth < 768) setMobileOpen(false); else setCollapsed(!collapsed); }}
             class="ml-auto text-void-500 hover:text-slate-400 transition-colors text-xs shrink-0">
             {collapsed ? "▶" : "◀"}
           </button>
         </div>
 
         {/* Nav */}
-        <nav class="flex-1 py-3 px-2 space-y-0.5">
+        <nav class="flex-1 py-3 px-2 space-y-0.5 overflow-y-auto">
           {NAV.map(item => {
             const isActive = active === item.href;
             return (
@@ -88,6 +100,17 @@ export default function DashboardLayout({ active, children, wallet }: Props) {
 
       {/* Content */}
       <div class="flex-1 flex flex-col min-w-0 overflow-hidden">
+        {/* Mobile top bar */}
+        <div class="flex md:hidden items-center gap-3 px-3 py-2 border-b border-void-700 bg-void-850 shrink-0">
+          <button onClick={() => setMobileOpen(true)} class="text-slate-400 hover:text-cyan-400 transition-colors p-1">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+          </button>
+          <a href="/" class="flex items-center gap-1.5">
+            <img src="/logo.png" alt="Qwenta" class="w-5 h-5 rounded" />
+            <span class="font-display text-white text-sm italic">Qwenta</span>
+          </a>
+          <span class="text-[9px] font-mono text-cyan-400 ml-auto">{NAV.find(n => n.href === active)?.label}</span>
+        </div>
         {children}
       </div>
     </div>

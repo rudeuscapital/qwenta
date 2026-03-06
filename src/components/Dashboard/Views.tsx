@@ -24,10 +24,10 @@ export function WatchlistView({ wallet }:{ wallet:string }) {
 
   return (
     <DashboardLayout active="/dashboard/watchlist" wallet={wallet}>
-      <div className="flex h-full overflow-hidden">
-        {/* List sidebar */}
-        <div className="w-48 border-r border-void-700 bg-void-850 flex flex-col shrink-0">
-          <div className="flex items-center justify-between px-4 py-3 border-b border-void-700">
+      <div className="flex flex-col md:flex-row h-full overflow-hidden">
+        {/* List sidebar — horizontal scroll on mobile, vertical sidebar on desktop */}
+        <div className="md:w-48 border-b md:border-b-0 md:border-r border-void-700 bg-void-850 flex flex-col shrink-0">
+          <div className="flex items-center justify-between px-4 py-2 md:py-3 border-b border-void-700">
             <span className="text-[10px] font-mono text-cyan-400 tracking-widest font-semibold">WATCHLISTS</span>
             <button onClick={()=>setShowNew(true)} className="text-void-500 hover:text-cyan-400 text-base transition-colors">+</button>
           </div>
@@ -36,18 +36,18 @@ export function WatchlistView({ wallet }:{ wallet:string }) {
               className="w-full bg-void-700 border border-void-600 rounded px-2 py-1.5 text-[10px] font-mono text-slate-200 placeholder-void-500 focus:outline-none focus:border-cyan-500/30 mb-1.5"/>
             <button onClick={async()=>{if(newName.trim()){await post({action:"create_list",name:newName});setNewName("");setShowNew(false);loadLists();}}} className="w-full px-2 py-1 bg-cyan-500/10 border border-cyan-500/30 rounded text-cyan-400 text-[9px] font-mono">CREATE</button>
           </div>}
-          <div className="flex-1 overflow-y-auto py-2">
+          <div className="flex md:flex-col overflow-x-auto md:overflow-y-auto py-1 md:py-2 px-1 md:px-0 gap-1 md:gap-0 md:flex-1">
             {lists.map(l=><div key={l.id} onClick={()=>setActiveId(l.id)}
-              className={`flex items-center px-3 py-2 cursor-pointer transition-colors ${activeId===l.id?"bg-cyan-500/10 border-r-2 border-cyan-400":"hover:bg-void-800"}`}>
+              className={`flex items-center px-3 py-1.5 md:py-2 cursor-pointer transition-colors whitespace-nowrap rounded md:rounded-none shrink-0 ${activeId===l.id?"bg-cyan-500/10 md:border-r-2 border-cyan-400":"hover:bg-void-800"}`}>
               <span className={`text-xs font-sans ${activeId===l.id?"text-cyan-300":"text-slate-400"}`}>{l.name}</span>
             </div>)}
           </div>
         </div>
         {/* Items */}
-        <div className="flex-1 flex flex-col overflow-hidden">
-          <div className="flex items-center gap-2 px-5 py-2.5 border-b border-void-700 bg-void-850 shrink-0">
-            <input value={newSym} onChange={e=>setNewSym(e.target.value.toUpperCase())} placeholder="Symbol" className="bg-void-800 border border-void-700 rounded-lg px-3 py-1.5 text-xs font-mono text-cyan-300 placeholder-void-500 w-28 focus:outline-none focus:border-cyan-500/40 uppercase"/>
-            <input value={newNotes} onChange={e=>setNewNotes(e.target.value)} placeholder="Notes (optional)" className="flex-1 bg-void-800 border border-void-700 rounded-lg px-3 py-1.5 text-xs font-mono text-slate-300 placeholder-void-500 focus:outline-none focus:border-cyan-500/40"/>
+        <div className="flex-1 flex flex-col overflow-hidden min-h-0">
+          <div className="flex flex-wrap items-center gap-2 px-3 md:px-5 py-2 md:py-2.5 border-b border-void-700 bg-void-850 shrink-0">
+            <input value={newSym} onChange={e=>setNewSym(e.target.value.toUpperCase())} placeholder="Symbol" className="bg-void-800 border border-void-700 rounded-lg px-3 py-1.5 text-xs font-mono text-cyan-300 placeholder-void-500 w-24 md:w-28 focus:outline-none focus:border-cyan-500/40 uppercase"/>
+            <input value={newNotes} onChange={e=>setNewNotes(e.target.value)} placeholder="Notes" className="flex-1 min-w-[80px] bg-void-800 border border-void-700 rounded-lg px-3 py-1.5 text-xs font-mono text-slate-300 placeholder-void-500 focus:outline-none focus:border-cyan-500/40"/>
             <button disabled={!newSym.trim()||adding} onClick={async()=>{if(!activeId||!newSym.trim())return;setAdding(true);await post({action:"add",watchlist_id:activeId,symbol:newSym,notes:newNotes});setNewSym("");setNewNotes("");setAdding(false);loadItems(activeId);}}
               className="px-4 py-1.5 bg-cyan-500/10 border border-cyan-500/30 rounded-lg text-cyan-400 text-xs font-mono hover:bg-cyan-500/20 disabled:opacity-40 transition-colors">{adding?"...":"ADD"}</button>
           </div>
@@ -107,26 +107,26 @@ export function PortfolioView({ wallet }:{ wallet:string }) {
 
   return (
     <DashboardLayout active="/dashboard/portfolio" wallet={wallet}>
-      <header className="flex items-center gap-3 px-5 py-2.5 border-b border-void-700 bg-void-850 shrink-0">
+      <header className="flex items-center gap-2 md:gap-3 px-3 md:px-5 py-2 md:py-2.5 border-b border-void-700 bg-void-850 shrink-0 flex-wrap">
         <span className="text-[10px] font-mono text-cyan-400 tracking-widest font-semibold">PORTFOLIO</span>
         <div className="flex gap-1.5 overflow-x-auto">
-          {portfolios.map(p=><button key={p.id} onClick={()=>setActiveId(p.id)} className={`px-2.5 py-1 text-[10px] font-mono rounded transition-colors border ${activeId===p.id?"bg-cyan-500/15 text-cyan-400 border-cyan-500/30":"text-void-500 border-void-700 hover:text-slate-400"}`}>{p.name}</button>)}
-          <button onClick={async()=>{const n=prompt("Portfolio name:");if(!n)return;await post({action:"create",name:n});loadPortfolios();}} className="px-2 py-1 text-[10px] font-mono text-void-500 border border-void-700 rounded hover:text-cyan-400 transition-colors">+ NEW</button>
+          {portfolios.map(p=><button key={p.id} onClick={()=>setActiveId(p.id)} className={`px-2.5 py-1 text-[10px] font-mono rounded transition-colors border whitespace-nowrap ${activeId===p.id?"bg-cyan-500/15 text-cyan-400 border-cyan-500/30":"text-void-500 border-void-700 hover:text-slate-400"}`}>{p.name}</button>)}
+          <button onClick={async()=>{const n=prompt("Portfolio name:");if(!n)return;await post({action:"create",name:n});loadPortfolios();}} className="px-2 py-1 text-[10px] font-mono text-void-500 border border-void-700 rounded hover:text-cyan-400 transition-colors whitespace-nowrap">+ NEW</button>
         </div>
         <div className="ml-auto"><button onClick={()=>setShowTrade(true)} className="px-3 py-1.5 bg-bull/10 border border-bull/30 rounded-lg text-bull text-[10px] font-mono hover:bg-bull/20 transition-colors">+ TRADE</button></div>
       </header>
-      {summary && <div className="flex gap-3 px-5 py-2.5 border-b border-void-700 bg-void-900/50 shrink-0 overflow-x-auto">
+      {summary && <div className="flex gap-2 md:gap-3 px-3 md:px-5 py-2 md:py-2.5 border-b border-void-700 bg-void-900/50 shrink-0 overflow-x-auto">
         {[["Total Value",`$${summary.totalValue.toFixed(2)}`,"text-white"],["Total Cost",`$${summary.totalCost.toFixed(2)}`,"text-slate-400"],
           ["Unrealized P&L",`${summary.totalPnl>=0?"+":""}$${Math.abs(summary.totalPnl).toFixed(2)}`,summary.totalPnl>=0?"text-bull":"text-bear"],
           ["Return",`${summary.totalPnlPct>=0?"+":""}${summary.totalPnlPct.toFixed(2)}%`,summary.totalPnlPct>=0?"text-bull":"text-bear"],
           ["Positions",String(summary.positionCount),"text-cyan-400"]
         ].map(([l,v,c])=><div key={l} className="bg-void-800 border border-void-700 rounded-lg px-4 py-2 shrink-0"><p className="text-[9px] font-mono text-void-500 uppercase tracking-widest">{l}</p><p className={`text-sm font-mono font-semibold mt-0.5 ${c}`}>{v}</p></div>)}
       </div>}
-      <div className="flex gap-1 px-5 py-2 border-b border-void-700 bg-void-850 shrink-0">
+      <div className="flex gap-1 px-3 md:px-5 py-2 border-b border-void-700 bg-void-850 shrink-0">
         {(["positions","transactions"] as const).map(t=><button key={t} onClick={()=>setView(t)} className={`px-3 py-1 text-[9px] font-mono uppercase tracking-widest rounded transition-colors ${view===t?"bg-cyan-500/10 text-cyan-400 border border-cyan-500/20":"text-void-500 hover:text-slate-400"}`}>{t}</button>)}
       </div>
       <div className="flex-1 overflow-auto">
-        {view==="positions"?<table className="w-full text-xs font-mono"><thead className="sticky top-0 bg-void-850 border-b border-void-700"><tr>{["SYMBOL","SHARES","AVG COST","CURRENT","MKT VALUE","COST BASIS","P&L","RETURN","DAY %"].map(h=><th key={h} className="text-left px-4 py-2 text-[9px] text-void-500 tracking-widest">{h}</th>)}</tr></thead>
+        {view==="positions"?<div className="overflow-x-auto min-w-0"><table className="w-full text-xs font-mono min-w-[700px]"><thead className="sticky top-0 bg-void-850 border-b border-void-700"><tr>{["SYMBOL","SHARES","AVG COST","CURRENT","MKT VALUE","COST BASIS","P&L","RETURN","DAY %"].map(h=><th key={h} className="text-left px-4 py-2 text-[9px] text-void-500 tracking-widest">{h}</th>)}</tr></thead>
           <tbody>{positions.length===0?<tr><td colSpan={9} className="px-4 py-8 text-center text-void-600 text-sm">No positions. Record a trade to start.</td></tr>:positions.map((p,i)=>(
             <tr key={p.id} className={`border-b border-void-800 hover:bg-void-800/40 transition-colors ${i%2===0?"":"bg-void-900/20"}`}>
               <td className="px-4 py-2.5 text-cyan-400 font-semibold">{p.symbol}</td>
@@ -138,8 +138,8 @@ export function PortfolioView({ wallet }:{ wallet:string }) {
               <td className={`px-4 py-2.5 font-medium ${p.unrealizedPnl>=0?"text-bull":"text-bear"}`}>{p.unrealizedPnl>=0?"+":""}${Math.abs(p.unrealizedPnl).toFixed(2)}</td>
               <td className={`px-4 py-2.5 ${p.unrealizedPct>=0?"text-bull":"text-bear"}`}>{p.unrealizedPct>=0?"+":""}{p.unrealizedPct.toFixed(2)}%</td>
               <td className={`px-4 py-2.5 ${p.changePct>=0?"text-bull":"text-bear"}`}>{p.changePct>=0?"+":""}{p.changePct.toFixed(2)}%</td>
-            </tr>))}</tbody></table>:
-          <table className="w-full text-xs font-mono"><thead className="sticky top-0 bg-void-850 border-b border-void-700"><tr>{["DATE","SYMBOL","TYPE","SHARES","PRICE","FEE","TOTAL","NOTES"].map(h=><th key={h} className="text-left px-4 py-2 text-[9px] text-void-500 tracking-widest">{h}</th>)}</tr></thead>
+            </tr>))}</tbody></table></div>:
+          <div className="overflow-x-auto min-w-0"><table className="w-full text-xs font-mono min-w-[600px]"><thead className="sticky top-0 bg-void-850 border-b border-void-700"><tr>{["DATE","SYMBOL","TYPE","SHARES","PRICE","FEE","TOTAL","NOTES"].map(h=><th key={h} className="text-left px-4 py-2 text-[9px] text-void-500 tracking-widest">{h}</th>)}</tr></thead>
             <tbody>{transactions.length===0?<tr><td colSpan={8} className="px-4 py-8 text-center text-void-600 text-sm">No transactions yet.</td></tr>:transactions.map((tx,i)=>(
               <tr key={tx.id} className={`border-b border-void-800 hover:bg-void-800/40 transition-colors ${i%2===0?"":"bg-void-900/20"}`}>
                 <td className="px-4 py-2.5 text-slate-400">{new Date(tx.executed_at).toLocaleDateString()}</td>
@@ -150,10 +150,10 @@ export function PortfolioView({ wallet }:{ wallet:string }) {
                 <td className="px-4 py-2.5 text-slate-500">${Number(tx.fee).toFixed(2)}</td>
                 <td className="px-4 py-2.5 text-slate-200 font-medium">${(Number(tx.shares)*Number(tx.price)).toFixed(2)}</td>
                 <td className="px-4 py-2.5 text-void-500 text-[9px]">{tx.notes}</td>
-              </tr>))}</tbody></table>}
+              </tr>))}</tbody></table></div>}
       </div>
-      {showTrade && <div className="fixed inset-0 bg-void-900/80 backdrop-blur-sm flex items-center justify-center z-50 animate-fade-in">
-        <div className="bg-void-850 border border-void-600 rounded-2xl p-6 w-96 shadow-panel">
+      {showTrade && <div className="fixed inset-0 bg-void-900/80 backdrop-blur-sm flex items-center justify-center z-50 animate-fade-in p-4">
+        <div className="bg-void-850 border border-void-600 rounded-2xl p-5 md:p-6 w-full max-w-sm shadow-panel">
           <div className="flex justify-between items-center mb-5"><h2 className="text-white font-display italic text-xl">Record Trade</h2><button onClick={()=>setShowTrade(false)} className="text-void-500 hover:text-slate-400">✕</button></div>
           <div className="flex gap-2 mb-4">{(["buy","sell"] as const).map(t=><button key={t} onClick={()=>setTf(p=>({...p,type:t}))} className={`flex-1 py-1.5 text-xs font-mono uppercase rounded border transition-colors ${tf.type===t?t==="buy"?"bg-bull/10 border-bull/40 text-bull":"bg-bear/10 border-bear/40 text-bear":"bg-void-800 border-void-700 text-void-500 hover:text-slate-400"}`}>{t}</button>)}</div>
           <div className="space-y-3">
@@ -198,9 +198,9 @@ export function ScreenerView({ wallet }:{ wallet:string }) {
 
   return (
     <DashboardLayout active="/dashboard/screener" wallet={wallet}>
-      <div className="flex h-full overflow-hidden">
-        <div className="w-60 border-r border-void-700 bg-void-850 flex flex-col shrink-0 overflow-y-auto">
-          <div className="px-4 py-3 border-b border-void-700"><p className="text-[10px] font-mono text-cyan-400 tracking-widest font-semibold">FILTERS</p></div>
+      <div className="flex flex-col md:flex-row h-full overflow-hidden">
+        <div className="md:w-60 border-b md:border-b-0 md:border-r border-void-700 bg-void-850 flex flex-col shrink-0 max-h-48 md:max-h-none overflow-y-auto">
+          <div className="px-4 py-2 md:py-3 border-b border-void-700"><p className="text-[10px] font-mono text-cyan-400 tracking-widest font-semibold">FILTERS</p></div>
           <div className="px-4 py-3 space-y-4">
             <div><p className="text-[9px] font-mono text-void-500 uppercase tracking-widest mb-2">Quick Presets</p>
               {PRESETS.map(p=><button key={p.label} onClick={()=>{setFilters(p.filters);run(p.filters);}} className="w-full text-left px-2.5 py-1.5 text-[10px] font-sans text-slate-400 hover:text-cyan-300 hover:bg-void-800 rounded transition-colors">{p.label}</button>)}
@@ -314,9 +314,9 @@ export function NewsView({ wallet }:{ wallet:string }) {
         </div>
       </header>
 
-      <div className="flex-1 flex overflow-hidden min-h-0">
+      <div className="flex-1 flex flex-col md:flex-row overflow-hidden min-h-0">
         {/* Sentiment panel */}
-        <div className="w-72 border-r border-void-700 bg-void-850 flex flex-col shrink-0">
+        <div className="md:w-72 border-b md:border-b-0 md:border-r border-void-700 bg-void-850 flex flex-col shrink-0 max-h-52 md:max-h-none">
           <div className="px-4 py-3 border-b border-void-700">
             <p className="text-[10px] font-mono text-cyan-400 tracking-widest font-semibold">AI SENTIMENT</p>
             <p className="text-[9px] font-mono text-void-500 mt-0.5">Powered by QwenAI</p>
@@ -419,7 +419,7 @@ export function CompareView({ wallet }:{ wallet:string }) {
 
   return (
     <DashboardLayout active="/dashboard/compare" wallet={wallet}>
-      <header className="flex items-center gap-3 px-5 py-2.5 border-b border-void-700 bg-void-850 shrink-0 flex-wrap">
+      <header className="flex items-center gap-2 md:gap-3 px-3 md:px-5 py-2 md:py-2.5 border-b border-void-700 bg-void-850 shrink-0 flex-wrap">
         <span className="text-[10px] font-mono text-cyan-400 tracking-widest font-semibold">COMPARE</span>
         <div className="flex gap-1.5 flex-wrap">
           {symbols.map((s,i)=><div key={s} className="flex items-center gap-1.5 px-2.5 py-1 rounded border text-[10px] font-mono" style={{borderColor:COLORS[i]+"60",backgroundColor:COLORS[i]+"12",color:COLORS[i]}}>{s}<button onClick={()=>setSymbols(symbols.filter(x=>x!==s))} className="opacity-50 hover:opacity-100">✕</button></div>)}
@@ -431,7 +431,7 @@ export function CompareView({ wallet }:{ wallet:string }) {
         <div className="flex gap-1">{(["1mo","3mo","6mo","1y","2y"] as Period[]).map(p=><button key={p} onClick={()=>setPeriod(p)} className={`px-2 py-1 text-[9px] font-mono rounded transition-colors ${period===p?"bg-void-700 text-cyan-400":"text-void-500 hover:text-slate-400"}`}>{p.toUpperCase()}</button>)}</div>
         <button onClick={compare} disabled={symbols.length<2||loading} className="px-4 py-1.5 bg-cyan-500/10 border border-cyan-500/30 rounded-lg text-cyan-400 text-[10px] font-mono hover:bg-cyan-500/20 disabled:opacity-40 transition-colors">{loading?"LOADING...":"COMPARE"}</button>
       </header>
-      <div className="flex-1 flex flex-col p-4 gap-4 overflow-hidden min-h-0">
+      <div className="flex-1 flex flex-col p-2 md:p-4 gap-3 md:gap-4 overflow-hidden min-h-0">
         {loading&&<div className="flex-1 flex items-center justify-center"><div className="flex gap-1">{[0,1,2].map(i=><span key={i} className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse-dot" style={{animationDelay:`${i*0.16}s`}}/>)}</div></div>}
         {!loading&&chartData.length>0&&<>
           <div className="flex-1 min-h-0">
@@ -447,8 +447,8 @@ export function CompareView({ wallet }:{ wallet:string }) {
               </LineChart>
             </ResponsiveContainer>
           </div>
-          {ok.length>0&&<div className="shrink-0">
-            <table className="w-full text-xs font-mono"><thead><tr className="border-b border-void-700">{["SYMBOL","NAME","CURRENT","PERIOD RETURN","DAY %"].map(h=><th key={h} className="text-left px-4 py-2 text-[9px] text-void-500 tracking-widest">{h}</th>)}</tr></thead>
+          {ok.length>0&&<div className="shrink-0 overflow-x-auto">
+            <table className="w-full text-xs font-mono min-w-[500px]"><thead><tr className="border-b border-void-700">{["SYMBOL","NAME","CURRENT","PERIOD RETURN","DAY %"].map(h=><th key={h} className="text-left px-4 py-2 text-[9px] text-void-500 tracking-widest">{h}</th>)}</tr></thead>
               <tbody>{ok.map((d,i)=>{const ret=d.normalized.at(-1)?.value??0,day=(d.quote?.regularMarketChangePercent??0)*100;return(
                 <tr key={d.symbol} className="border-b border-void-800 hover:bg-void-800/30 transition-colors">
                   <td className="px-4 py-2" style={{color:COLORS[i]}}><span className="font-semibold">{d.symbol}</span></td>
@@ -463,7 +463,7 @@ export function CompareView({ wallet }:{ wallet:string }) {
         {!loading&&chartData.length===0&&<div className="flex-1 flex flex-col items-center justify-center gap-3">
           <p className="text-void-600 font-display text-2xl italic">Multi-Symbol Comparison</p>
           <p className="text-[10px] font-mono text-void-600">Add symbols above and click COMPARE</p>
-          <div className="flex gap-2 mt-2">{[["AAPL","NVDA","MSFT"],["BTC-USD","ETH-USD","SOL-USD"],["SPY","QQQ","IWM"]].map(g=><button key={g.join()} onClick={()=>setSymbols(g)} className="px-3 py-1.5 bg-void-800 border border-void-700 rounded text-[10px] font-mono text-slate-400 hover:text-cyan-300 hover:border-cyan-500/30 transition-colors">{g.join(" vs ")}</button>)}</div>
+          <div className="flex flex-wrap gap-2 mt-2 justify-center">{[["AAPL","NVDA","MSFT"],["BTC-USD","ETH-USD","SOL-USD"],["SPY","QQQ","IWM"]].map(g=><button key={g.join()} onClick={()=>setSymbols(g)} className="px-3 py-1.5 bg-void-800 border border-void-700 rounded text-[10px] font-mono text-slate-400 hover:text-cyan-300 hover:border-cyan-500/30 transition-colors">{g.join(" vs ")}</button>)}</div>
         </div>}
       </div>
     </DashboardLayout>

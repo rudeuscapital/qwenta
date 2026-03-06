@@ -103,28 +103,28 @@ export default function TradingView({ wallet }:{ wallet:string }) {
   return (
     <DashboardLayout active="/dashboard" wallet={wallet}>
       {/* Header */}
-      <header className="flex items-center gap-3 px-5 py-2.5 border-b border-void-700 bg-void-850 shrink-0 overflow-x-auto">
+      <header className="flex flex-wrap items-center gap-2 px-3 md:px-5 py-2 md:py-2.5 border-b border-void-700 bg-void-850 shrink-0 overflow-x-auto">
         <form onSubmit={e=>{e.preventDefault();const s=inputSym.trim().toUpperCase();if(s)setSym(s);}} className="flex gap-2 shrink-0">
           <input value={inputSym} onChange={e=>setInputSym(e.target.value.toUpperCase())} placeholder="Symbol"
-            className="bg-void-800 border border-void-600 rounded-lg px-3 py-1.5 text-xs font-mono text-cyan-300 placeholder-void-500 w-24 focus:outline-none focus:border-cyan-500/40 uppercase" />
+            className="bg-void-800 border border-void-600 rounded-lg px-3 py-1.5 text-xs font-mono text-cyan-300 placeholder-void-500 w-20 md:w-24 focus:outline-none focus:border-cyan-500/40 uppercase" />
           <button type="submit" className="px-3 py-1.5 bg-cyan-500/10 border border-cyan-500/30 rounded-lg text-cyan-400 text-[10px] font-mono hover:bg-cyan-500/20 transition-colors">GO</button>
         </form>
-        <div className="flex gap-1 overflow-x-auto">
+        <div className="hidden sm:flex gap-1 overflow-x-auto">
           {POPULAR.map(s => <button key={s} onClick={()=>{setSym(s);setInputSym(s);}}
             className={`px-2 py-1 text-[10px] font-mono rounded whitespace-nowrap transition-colors ${sym===s?"bg-cyan-500/15 text-cyan-400 border border-cyan-500/25":"text-void-500 hover:text-slate-400"}`}>{s}</button>)}
         </div>
-        <div className="ml-auto flex items-center gap-2 shrink-0">
+        <div className="ml-auto flex items-center gap-1 md:gap-2 shrink-0">
           {sym && <>
-            <a href={`/api/export?symbol=${sym}&period=${period}&format=csv`} className="px-2 py-1 text-[9px] font-mono text-void-500 hover:text-cyan-400 border border-void-700 rounded transition-colors">CSV</a>
-            <a href={`/api/export?symbol=${sym}&period=${period}&format=xlsx`} className="px-2 py-1 text-[9px] font-mono text-void-500 hover:text-cyan-400 border border-void-700 rounded transition-colors">XLSX</a>
+            <a href={`/api/export?symbol=${sym}&period=${period}&format=csv`} className="hidden md:block px-2 py-1 text-[9px] font-mono text-void-500 hover:text-cyan-400 border border-void-700 rounded transition-colors">CSV</a>
+            <a href={`/api/export?symbol=${sym}&period=${period}&format=xlsx`} className="hidden md:block px-2 py-1 text-[9px] font-mono text-void-500 hover:text-cyan-400 border border-void-700 rounded transition-colors">XLSX</a>
           </>}
-          <div className="flex gap-1">{INTERVALS.map(iv=><button key={iv.val} onClick={()=>setInterval(iv.val)} className={`px-2 py-1 text-[9px] font-mono rounded ${interval===iv.val?"bg-void-700 text-cyan-400":"text-void-500 hover:text-slate-400"}`}>{iv.label}</button>)}</div>
-          <div className="flex gap-1">{PERIODS.map(p=><button key={p} onClick={()=>setPeriod(p)} className={`px-2 py-1 text-[9px] font-mono rounded ${period===p?"bg-void-700 text-cyan-400":"text-void-500 hover:text-slate-400"}`}>{p.toUpperCase()}</button>)}</div>
+          <div className="flex gap-0.5 md:gap-1">{INTERVALS.map(iv=><button key={iv.val} onClick={()=>setInterval(iv.val)} className={`px-1.5 md:px-2 py-1 text-[9px] font-mono rounded ${interval===iv.val?"bg-void-700 text-cyan-400":"text-void-500 hover:text-slate-400"}`}>{iv.label}</button>)}</div>
+          <div className="flex gap-0.5 md:gap-1">{PERIODS.map(p=><button key={p} onClick={()=>setPeriod(p)} className={`px-1.5 md:px-2 py-1 text-[9px] font-mono rounded ${period===p?"bg-void-700 text-cyan-400":"text-void-500 hover:text-slate-400"}`}>{p.toUpperCase()}</button>)}</div>
         </div>
       </header>
 
       {/* Quote strip */}
-      {q && <div className="flex items-center gap-3 px-5 py-2 border-b border-void-700 bg-void-900/50 shrink-0 overflow-x-auto">
+      {q && <div className="flex items-center gap-2 md:gap-3 px-3 md:px-5 py-2 border-b border-void-700 bg-void-900/50 shrink-0 overflow-x-auto">
         <div className="shrink-0">
           <span className="text-white font-display text-xl italic">{sym}</span>
           <span className="text-void-500 font-mono text-[10px] ml-2">{q.shortName as string}</span>
@@ -148,9 +148,9 @@ export default function TradingView({ wallet }:{ wallet:string }) {
       </div>}
 
       {/* Chart + Chat */}
-      <div className="flex-1 flex overflow-hidden min-h-0">
+      <div className="flex-1 flex flex-col md:flex-row overflow-hidden min-h-0">
         {/* Chart panel */}
-        <div className="flex-1 flex flex-col p-3 gap-2 min-w-0 overflow-hidden">
+        <div className="flex-1 flex flex-col p-2 md:p-3 gap-2 min-w-0 overflow-hidden min-h-[250px] md:min-h-0">
           {loading && <div className="flex-1 flex items-center justify-center"><div className="flex gap-1">{[0,1,2].map(i=><span key={i} className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse-dot" style={{animationDelay:`${i*0.16}s`}}/>)}</div></div>}
           {error && !loading && <div className="flex-1 flex items-center justify-center"><div className="bg-bear-dim border border-bear/20 rounded-xl px-6 py-4 text-bear font-mono text-sm">⚠ {error}</div></div>}
           {!loading && !error && chartData.length > 0 && <>
@@ -210,7 +210,7 @@ export default function TradingView({ wallet }:{ wallet:string }) {
         </div>
 
         {/* Sidebar: Chat / News */}
-        <div className="w-72 xl:w-80 border-l border-void-700 flex flex-col shrink-0">
+        <div className="w-full md:w-72 xl:w-80 border-t md:border-t-0 md:border-l border-void-700 flex flex-col shrink-0 h-64 md:h-auto">
           {/* Tabs */}
           <div className="flex border-b border-void-700 shrink-0">
             <button onClick={()=>setSideTab("chat")} className={`flex-1 flex items-center justify-center gap-1.5 px-4 py-2.5 text-[10px] font-mono font-semibold tracking-widest transition-colors ${sideTab==="chat"?"text-cyan-400 bg-void-800/50 border-b-2 border-cyan-400":"text-void-500 hover:text-slate-400"}`}>
