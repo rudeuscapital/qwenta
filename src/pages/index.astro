@@ -286,26 +286,6 @@ import Base from "../layouts/Base.astro";
         </div>
       </div>
 
-      <!-- Token utility -->
-      <div>
-        <p class="text-[9px] font-mono text-void-500 uppercase tracking-widest mb-3">Token Utility</p>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          {[
-            { icon:"⬡", title:"Premium Access", desc:"Unlock advanced AI models, priority data feeds, and extended API rate limits." },
-            { icon:"⬢", title:"Governance", desc:"Vote on platform features, new integrations, and protocol upgrades." },
-            { icon:"◈", title:"Staking Rewards", desc:"Stake $QWENTA to earn platform revenue share and trading fee discounts." },
-            { icon:"◉", title:"Ecosystem Payments", desc:"Pay for premium subscriptions, white-label licensing, and enterprise features." },
-          ].map(u => (
-            <div class="flex gap-3 p-3 rounded-xl border border-void-700 bg-void-900/30 hover:border-cyan-500/20 transition-colors">
-              <span class="text-cyan-400 text-lg shrink-0 mt-0.5">{u.icon}</span>
-              <div>
-                <p class="text-white text-sm font-medium mb-0.5">{u.title}</p>
-                <p class="text-slate-500 text-xs leading-relaxed">{u.desc}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
     </div>
 
     <p class="text-center text-[10px] font-mono text-void-600 mt-6">Token details including network, supply, and launch date will be announced on our official channels.</p>
