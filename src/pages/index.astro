@@ -17,6 +17,7 @@ import Base from "../layouts/Base.astro";
     <a href="#mobile" class="hover:text-cyan-400 transition-colors">Mobile</a>
     <a href="/docs" class="hover:text-cyan-400 transition-colors">Docs</a>
     <a href="#roadmap" class="hover:text-cyan-400 transition-colors">Roadmap</a>
+    <a href="#token" class="hover:text-cyan-400 transition-colors">Token</a>
   </div>
 
   <a href="/login" class="flex items-center gap-2 px-3 md:px-5 py-2 bg-cyan-500/10 border border-cyan-500/30 rounded-lg text-cyan-400 text-xs md:text-sm font-medium hover:bg-cyan-500/20 transition-all hover:shadow-cyan-sm">
@@ -52,7 +53,7 @@ import Base from "../layouts/Base.astro";
     </h1>
 
     <p class="text-base sm:text-xl text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed animate-slide-up" style="animation-delay:0.2s;opacity:0">
-      Qwenta combines real-time market data, advanced technical analysis, portfolio tracking, and private AI — all in one platform. Built for traders who demand edge.
+      Real-time market data, advanced technical analysis, portfolio tracking, news sentiment, and private AI — all in one platform. Available on desktop and mobile.
     </p>
 
     <div class="flex flex-col sm:flex-row gap-4 justify-center animate-slide-up" style="animation-delay:0.3s;opacity:0">
@@ -68,8 +69,8 @@ import Base from "../layouts/Base.astro";
     </div>
 
     <!-- Stats -->
-    <div class="grid grid-cols-3 gap-8 max-w-lg mx-auto mt-20 animate-slide-up" style="animation-delay:0.5s;opacity:0">
-      {[["50+","Indicators"], ["100%","Private AI"], ["5","Pages"]].map(([val, label]) => (
+    <div class="grid grid-cols-4 gap-6 max-w-xl mx-auto mt-20 animate-slide-up" style="animation-delay:0.5s;opacity:0">
+      {[["50+","Indicators"], ["100%","Private AI"], ["7","API Endpoints"], ["PWA","Mobile Ready"]].map(([val, label]) => (
         <div class="text-center">
           <p class="text-3xl font-display text-white">{val}</p>
           <p class="text-xs font-mono text-slate-500 mt-1 tracking-widest uppercase">{label}</p>
@@ -100,13 +101,13 @@ import Base from "../layouts/Base.astro";
       {[
         { icon:"◈", title:"Live Chart Engine", desc:"Multi-timeframe charts (1H–Weekly) with Bollinger Bands, SMA/EMA 20/50, RSI(14), MACD. Price, volume, and momentum in one view.", color:"text-cyan-400" },
         { icon:"◉", title:"Watchlist Manager", desc:"Multiple watchlists with live prices, daily change, market cap, and custom notes. PostgreSQL-backed, per-wallet isolated.", color:"text-lime-400" },
-        { icon:"◎", title:"Portfolio Tracker", desc:"Track positions with weighted avg cost. Real-time unrealized P&L, transaction history, and portfolio-level summary.", color:"text-cyan-400" },
-        { icon:"⊞", title:"Stock Screener", desc:"Filter entire market by RSI range, MACD direction, SMA cross, price range, daily change %. Six built-in presets.", color:"text-lime-400" },
-        { icon:"⊟", title:"Multi-Symbol Compare", desc:"Normalize and compare up to 6 symbols on the same chart. Period-relative return overlay.", color:"text-cyan-400" },
-        { icon:"⬡", title:"Qwen AI Analyst", desc:"Private AI with full market context — OHLCV, indicators, fundamentals. Streaming responses. 100% secure, no third-party access.", color:"text-lime-400" },
-        { icon:"⤓", title:"Export CSV / XLSX", desc:"Export any symbol's full OHLCV + indicator data as CSV or multi-sheet Excel file.", color:"text-cyan-400" },
-        { icon:"◊", title:"WalletConnect Auth", desc:"Sign-In with Ethereum (SIWE). One click with MetaMask, Phantom, Coinbase, or any WalletConnect-compatible wallet.", color:"text-lime-400" },
-        { icon:"◻", title:"Full API Surface", desc:"Seven RESTful endpoints. Stock data, chat, watchlist, portfolio, screener, compare, export. Documented with OpenAPI.", color:"text-cyan-400" },
+        { icon:"◎", title:"Portfolio Tracker", desc:"Track positions with weighted average cost. Real-time unrealized P&L, full transaction history, and portfolio summary.", color:"text-cyan-400" },
+        { icon:"⊞", title:"Stock Screener", desc:"Filter the entire market by RSI range, MACD direction, SMA crossover, price range, and daily change %. Six built-in presets.", color:"text-lime-400" },
+        { icon:"⊟", title:"Multi-Symbol Compare", desc:"Normalize and compare up to 6 symbols on the same chart. Period-relative return overlay with interactive tooltips.", color:"text-cyan-400" },
+        { icon:"⬡", title:"Qwen AI Analyst", desc:"Private AI with full market context — OHLCV, indicators, fundamentals. Streaming responses. 100% local, no third-party access.", color:"text-lime-400" },
+        { icon:"⬢", title:"News & Sentiment", desc:"Real-time financial news aggregation with AI-powered sentiment analysis. Bullish/bearish scoring per symbol, powered by Qwen.", color:"text-cyan-400" },
+        { icon:"◊", title:"Multi-Wallet Auth", desc:"Sign-In with Ethereum (SIWE) or Solana. One click with MetaMask, Phantom, or Coinbase Wallet. No passwords required.", color:"text-lime-400" },
+        { icon:"◻", title:"Full API & PWA", desc:"Seven RESTful endpoints with OpenAPI docs. Installable as a mobile app (PWA) on Android, iOS, and desktop.", color:"text-cyan-400" },
       ].map(f => (
         <div class="group p-6 rounded-2xl border border-void-600 bg-gradient-card hover:border-cyan-500/30 transition-all hover:shadow-card">
           <p class={`text-2xl mb-4 ${f.color}`}>{f.icon}</p>
@@ -126,9 +127,9 @@ import Base from "../layouts/Base.astro";
     <p class="text-slate-400 text-lg mb-16 leading-relaxed">No API keys sent to third parties. AI runs on dedicated infrastructure via Ollama. Your data is never shared. Your identity is your wallet.</p>
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
       {[
-        { icon:"🔐", title:"SIWE Authentication", desc:"Sign-In with Ethereum. Cryptographic proof of wallet ownership. No passwords, no email." },
-        { icon:"🖥️", title:"Private AI Engine", desc:"Qwen runs on dedicated infrastructure via Ollama. Zero data leaves the platform." },
-        { icon:"🗄️", title:"Isolated Data Storage", desc:"Each wallet gets its own isolated data space. Your watchlists, portfolio, and trades are never shared." },
+        { icon:"🔐", title:"Wallet Authentication", desc:"Sign in with MetaMask, Phantom, or Coinbase Wallet. Cryptographic proof of ownership. No passwords, no email." },
+        { icon:"🖥️", title:"Private AI Engine", desc:"Qwen AI runs on dedicated infrastructure via Ollama. Zero data leaves the platform. Your queries stay private." },
+        { icon:"🗄️", title:"Isolated Data Storage", desc:"Each wallet gets its own isolated data space. Watchlists, portfolios, and trades are never shared across accounts." },
       ].map(f => (
         <div class="p-6 rounded-2xl border border-void-600 bg-void-800/50 text-left">
           <p class="text-3xl mb-4">{f.icon}</p>
@@ -219,11 +220,11 @@ import Base from "../layouts/Base.astro";
     </div>
     <div class="space-y-4">
       {[
-        { q:"Q1 2026", status:"done", items:["Live chart engine (Price, RSI, MACD, Volume)","Watchlist & Portfolio with PostgreSQL","Stock Screener with 6 presets","Multi-symbol comparison","WalletConnect SIWE auth"] },
-        { q:"Q2 2026", status:"done", items:["Qwen AI analyst with market context","Export CSV/XLSX","Multi-timeframe support (1H, 4H, Daily, Weekly)","Full API documentation (OpenAPI)"] },
-        { q:"Q3 2026", status:"active", items:["Real-time WebSocket price feeds","Price alert system (email + webhook)","Backtesting engine (simple strategies)","Mobile-responsive dashboard"] },
-        { q:"Q4 2026", status:"planned", items:["Multi-chain portfolio (Ethereum, Solana, Base)","On-chain DeFi position tracking","Team workspaces with access controls","White-label deployment"] },
-        { q:"2027", status:"planned", items:["Custom AI model fine-tuning","Automated strategy execution hooks","Regulatory reporting module","Multi-region database replication"] },
+        { q:"Q1 2026", status:"done", items:["Live chart engine with RSI, MACD, Bollinger Bands, SMA/EMA","Watchlist & Portfolio tracking with PostgreSQL","Stock Screener with 6 presets and custom filters","Multi-symbol comparison with normalized returns","Multi-wallet auth — MetaMask, Phantom, Coinbase (SIWE)"] },
+        { q:"Q2 2026", status:"done", items:["Qwen AI analyst with full market context and streaming","News & Sentiment — real-time news with AI-powered scoring","Export CSV/XLSX with full OHLCV + indicator data","Multi-timeframe support (1H, 4H, Daily, Weekly)","Full API documentation with OpenAPI spec"] },
+        { q:"Q3 2026", status:"done", items:["Mobile PWA — installable on Android, iOS, and desktop","Mobile-responsive dashboard with drawer navigation","Service worker with offline caching strategy","Full API documentation (7 endpoints)"] },
+        { q:"Q4 2026", status:"active", items:["Real-time WebSocket price feeds","Price alert system (push notifications + webhook)","Backtesting engine for simple strategies","Advanced AI models with custom fine-tuning"] },
+        { q:"2027", status:"planned", items:["Multi-chain portfolio (Ethereum, Solana, Base)","On-chain DeFi position tracking","Team workspaces with role-based access controls","Automated strategy execution hooks","White-label deployment for institutions"] },
       ].map(phase => (
         <div class={`p-5 rounded-2xl border ${phase.status==="done"?"border-lime-500/20 bg-lime-500/5":phase.status==="active"?"border-cyan-500/30 bg-cyan-500/5":"border-void-600 bg-void-850"}`}>
           <div class="flex items-center gap-3 mb-3">
@@ -243,6 +244,71 @@ import Base from "../layouts/Base.astro";
         </div>
       ))}
     </div>
+  </div>
+</section>
+
+<!-- ── TOKEN ──────────────────────────────────────────────────────────── -->
+<section id="token" class="py-16 sm:py-32 px-4 sm:px-6 border-t border-void-700/50 relative overflow-hidden">
+  <div class="absolute inset-0 bg-glow-hero opacity-20" />
+  <div class="max-w-3xl mx-auto relative z-10">
+    <div class="text-center mb-12">
+      <p class="text-xs font-mono text-lime-400 tracking-widest uppercase mb-3">Platform Token</p>
+      <h2 class="font-display text-3xl sm:text-5xl text-white mb-4">$QWENTA</h2>
+      <p class="text-slate-400 text-lg max-w-xl mx-auto">The native utility token powering the Qwenta ecosystem. Access premium features, governance, and rewards.</p>
+    </div>
+
+    <div class="bg-void-800/80 backdrop-blur-sm border border-void-600 rounded-2xl p-6 sm:p-8 shadow-panel">
+      <!-- Token info grid -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+        {[
+          ["Token Name", "QWENTA"],
+          ["Ticker", "$QWENTA"],
+          ["Network", "TBA"],
+          ["Status", "Coming Soon"],
+        ].map(([label, value]) => (
+          <div class="bg-void-850 border border-void-700 rounded-xl p-3 text-center">
+            <p class="text-[9px] font-mono text-void-500 uppercase tracking-widest mb-1">{label}</p>
+            <p class="text-sm font-mono text-white font-semibold">{value}</p>
+          </div>
+        ))}
+      </div>
+
+      <!-- Contract address -->
+      <div class="bg-void-850 border border-void-700 rounded-xl p-4 mb-6">
+        <div class="flex items-center justify-between mb-2">
+          <p class="text-[9px] font-mono text-void-500 uppercase tracking-widest">Contract Address</p>
+          <span class="text-[9px] font-mono text-cyan-400 bg-cyan-500/10 border border-cyan-500/20 px-2 py-0.5 rounded tracking-widest">COMING SOON</span>
+        </div>
+        <div class="flex items-center gap-3 bg-void-900/50 border border-void-600 rounded-lg px-4 py-3">
+          <svg class="w-5 h-5 text-void-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <span class="font-mono text-sm text-void-500 tracking-wider">0x000...0000</span>
+          <span class="ml-auto text-[8px] font-mono text-void-600 uppercase">Not deployed</span>
+        </div>
+      </div>
+
+      <!-- Token utility -->
+      <div>
+        <p class="text-[9px] font-mono text-void-500 uppercase tracking-widest mb-3">Token Utility</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {[
+            { icon:"⬡", title:"Premium Access", desc:"Unlock advanced AI models, priority data feeds, and extended API rate limits." },
+            { icon:"⬢", title:"Governance", desc:"Vote on platform features, new integrations, and protocol upgrades." },
+            { icon:"◈", title:"Staking Rewards", desc:"Stake $QWENTA to earn platform revenue share and trading fee discounts." },
+            { icon:"◉", title:"Ecosystem Payments", desc:"Pay for premium subscriptions, white-label licensing, and enterprise features." },
+          ].map(u => (
+            <div class="flex gap-3 p-3 rounded-xl border border-void-700 bg-void-900/30 hover:border-cyan-500/20 transition-colors">
+              <span class="text-cyan-400 text-lg shrink-0 mt-0.5">{u.icon}</span>
+              <div>
+                <p class="text-white text-sm font-medium mb-0.5">{u.title}</p>
+                <p class="text-slate-500 text-xs leading-relaxed">{u.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <p class="text-center text-[10px] font-mono text-void-600 mt-6">Token details including network, supply, and launch date will be announced on our official channels.</p>
   </div>
 </section>
 
