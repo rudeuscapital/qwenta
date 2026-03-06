@@ -70,7 +70,7 @@ npm start
 
 <p>Set up Nginx to proxy requests to Qwenta with SSL:</p>
 
-<pre><code>server {
+<pre><code set:text={`server {
     listen 443 ssl;
     server_name your-domain.com;
 
@@ -84,7 +84,7 @@ npm start
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
     }
-}</code></pre>
+}`} /></pre>
 
 <h2>7. Connect Your Wallet</h2>
 
