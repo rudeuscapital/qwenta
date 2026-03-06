@@ -1,6 +1,6 @@
 # Qwenta — Enterprise AI Trading Platform
 
-> Institutional-grade trading intelligence. Self-hosted, AI-powered, crypto-authenticated.
+> Institutional-grade trading intelligence. VPS-deployed, AI-powered, crypto-authenticated.
 
 **Stack:** Astro SSR · React · PostgreSQL · Yahoo Finance · Ollama (Qwen) · WalletConnect/SIWE
 
@@ -16,7 +16,7 @@
 | 💼 Portfolio | P&L tracking, weighted avg cost, transaction history |
 | 🔎 Screener | Filter by 8+ indicator conditions, 5 built-in presets |
 | ↔ Compare | Normalize & compare up to 6 symbols |
-| 🤖 AI Analyst | Local Qwen via Ollama — private, streaming, context-aware |
+| 🤖 AI Analyst | Qwen via Ollama on VPS — private, streaming, context-aware |
 | 📥 Export | CSV & multi-sheet XLSX with all indicators |
 | 🔐 Auth | WalletConnect / MetaMask + SIWE (Sign-In with Ethereum) |
 | 📖 Docs | API reference, tutorials, changelog |
@@ -41,7 +41,7 @@ createdb qwenta && node scripts/migrate.js
 ollama pull qwen2.5
 
 # 5. Run
-npm run dev   # → http://localhost:4321
+npm run dev   # → http://your-vps-ip:4321
 ```
 
 ---
@@ -119,11 +119,11 @@ Full interactive docs: `/docs/api`
 ## ⚙️ Environment Variables
 
 ```env
-DATABASE_URL=postgresql://user:password@localhost:5432/qwenta
-OLLAMA_BASE_URL=http://localhost:11434
+DATABASE_URL=postgresql://user:password@127.0.0.1:5432/qwenta
+OLLAMA_BASE_URL=http://127.0.0.1:11434
 OLLAMA_MODEL=qwen2.5
 SESSION_SECRET=min-32-char-random-string
-PUBLIC_APP_URL=http://localhost:4321
+PUBLIC_APP_URL=https://your-domain.com
 ```
 
 ---

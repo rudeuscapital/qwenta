@@ -5,7 +5,7 @@ const client = new pg.Client({ connectionString: process.env.DATABASE_URL });
 const SQL = `
 CREATE TABLE IF NOT EXISTS users (
   id SERIAL PRIMARY KEY,
-  wallet_address VARCHAR(42) UNIQUE NOT NULL,
+  wallet_address VARCHAR(64) UNIQUE NOT NULL,
   ens_name VARCHAR(255),
   tier VARCHAR(20) DEFAULT 'enterprise',
   created_at TIMESTAMPTZ DEFAULT NOW(),

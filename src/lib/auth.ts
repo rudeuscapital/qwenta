@@ -35,7 +35,8 @@ export async function verifySessionToken(token: string): Promise<SessionUser | n
 }
 
 export async function getOrCreateUser(walletAddress: string, ensName?: string): Promise<SessionUser> {
-  const addr = walletAddress.toLowerCase();
+  // Only lowercase EVM (0x) addresses; Solana addresses are base58 and case-sensitive
+  const addr = walletAddress.startsWith("0x") ? walletAddress.toLowerCase() : walletAddress;
   let user = await queryOne<{ id: number; wallet_address: string; ens_name: string; tier: string }>(
     "SELECT id, wallet_address, ens_name, tier FROM users WHERE wallet_address = $1", [addr]
   );

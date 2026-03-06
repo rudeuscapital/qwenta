@@ -1,6 +1,6 @@
 import type { APIRoute } from "astro";
 import { buildMarketContext } from "../../lib/indicators.js";
-const OLLAMA = import.meta.env.OLLAMA_BASE_URL ?? "http://localhost:11434";
+const OLLAMA = import.meta.env.OLLAMA_BASE_URL ?? "http://127.0.0.1:11434";
 const MODEL  = import.meta.env.OLLAMA_MODEL ?? "qwen2.5";
 const SYSTEM = `You are Qwenta AI — an elite trading analyst for institutional clients. Expert in technical analysis (RSI, MACD, Bollinger Bands, SMA/EMA), fundamental analysis, risk management, and market microstructure. Respond in the same language as the user (Indonesian or English). Be precise, data-driven, and always cite specific numbers from the provided market data. Always include risk disclaimer.`;
 
