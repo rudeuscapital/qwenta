@@ -1,0 +1,30 @@
+/* empty css                                      */
+import { f as createComponent, j as renderComponent, r as renderTemplate, m as maybeRenderHead, h as addAttribute } from '../../chunks/astro/server_BVE5k6Zu.mjs';
+import 'kleur/colors';
+import { $ as $$DocsLayout } from '../../chunks/DocsLayout_DglTnE4M.mjs';
+export { renderers } from '../../renderers.mjs';
+
+const $$Tutorials = createComponent(($$result, $$props, $$slots) => {
+  return renderTemplate`${renderComponent($$result, "DocsLayout", $$DocsLayout, { "title": "Tutorials" }, { "default": ($$result2) => renderTemplate` ${maybeRenderHead()}<div class="prose"> <h1>Tutorials</h1> <p>Step-by-step guides for getting the most out of Qwenta.</p> <h2>Video Tutorials</h2> <div class="not-prose grid grid-cols-1 sm:grid-cols-2 gap-4 my-6"> ${[
+    { title: "Getting Started in 5 Minutes", duration: "5:12", level: "Beginner", desc: "Connect your wallet, explore the dashboard, and run your first stock analysis." },
+    { title: "Technical Analysis Deep Dive", duration: "12:30", level: "Intermediate", desc: "Master RSI, MACD, and Bollinger Bands using Qwenta's chart engine." },
+    { title: "Portfolio Tracking Setup", duration: "8:45", level: "Beginner", desc: "Record trades, track P&L, and analyze your portfolio performance over time." },
+    { title: "Stock Screener Strategies", duration: "10:20", level: "Intermediate", desc: "Build screener presets to find Golden Cross, oversold RSI, and momentum setups." },
+    { title: "Using the AI Analyst", duration: "7:55", level: "Beginner", desc: "How to ask QwenAI for analysis, strategy suggestions, and risk assessment." },
+    { title: "Deploying Qwenta on a VPS", duration: "15:00", level: "Advanced", desc: "Production deployment with Docker, Nginx reverse proxy, and SSL." }
+  ].map((v) => renderTemplate`<div class="bg-void-800 border border-void-600 rounded-xl p-5 hover:border-cyan-500/30 transition-all"> <div class="w-full aspect-video bg-void-700 rounded-lg mb-4 flex items-center justify-center border border-void-600"> <div class="text-center"> <p class="text-3xl mb-2">▶</p> <p class="text-[10px] font-mono text-void-500">${v.duration}</p> </div> </div> <span${addAttribute(`text-[9px] font-mono px-2 py-0.5 rounded border ${v.level === "Beginner" ? "bg-bull/10 text-bull border-bull/30" : v.level === "Intermediate" ? "bg-cyan-500/10 text-cyan-400 border-cyan-500/30" : "bg-bear/10 text-bear border-bear/30"}`, "class")}>${v.level}</span> <h3 class="text-white font-semibold mt-2 mb-1 text-sm">${v.title}</h3> <p class="text-slate-500 text-xs leading-relaxed">${v.desc}</p> </div>`)} </div> <h2>Written Guides</h2> <h3>How to Read the RSI Indicator</h3> <p>The Relative Strength Index (RSI) measures momentum on a scale of 0–100:</p> <ul> <li><strong>RSI &gt; 70</strong> → Overbought — price may pull back</li> <li><strong>RSI &lt; 30</strong> → Oversold — potential reversal upward</li> <li><strong>RSI 50</strong> → Neutral momentum</li> </ul> <pre><code>Use the Screener with rsiMax: 30 to find oversold stocks.</code></pre> <h3>Understanding MACD Signals</h3> <p>MACD (Moving Average Convergence Divergence) shows trend direction and momentum:</p> <ul> <li><strong>MACD crosses above Signal</strong> → Bullish signal</li> <li><strong>MACD crosses below Signal</strong> → Bearish signal</li> <li><strong>Histogram growing</strong> → Momentum strengthening</li> </ul> <h3>Bollinger Bands Strategy</h3> <p>Bollinger Bands show volatility around a 20-period SMA:</p> <ul> <li><strong>Price touches Lower Band</strong> → Potential bounce</li> <li><strong>Price touches Upper Band</strong> → Potential resistance</li> <li><strong>Bands narrow (squeeze)</strong> → Expect a breakout soon</li> </ul> <h3>Portfolio Management Best Practices</h3> <ol> <li>Record every trade with accurate price and fee</li> <li>Monitor unrealized P&amp;L daily but don't over-trade</li> <li>Use the Compare tool to benchmark against SPY or QQQ</li> <li>Export data weekly for external analysis</li> </ol> </div> ` })}`;
+}, "D:/project/qwenta/src/pages/docs/tutorials.astro", void 0);
+
+const $$file = "D:/project/qwenta/src/pages/docs/tutorials.astro";
+const $$url = "/docs/tutorials";
+
+const _page = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null,
+  default: $$Tutorials,
+  file: $$file,
+  url: $$url
+}, Symbol.toStringTag, { value: 'Module' }));
+
+const page = () => _page;
+
+export { page };

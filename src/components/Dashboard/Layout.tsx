@@ -6,6 +6,7 @@ const NAV = [
   { href:"/dashboard/portfolio",  icon:"◎", label:"Portfolio" },
   { href:"/dashboard/screener",   icon:"⊞", label:"Screener" },
   { href:"/dashboard/compare",    icon:"⊟", label:"Compare" },
+  { href:"/dashboard/news",       icon:"⊙", label:"News" },
 ];
 
 const DOCS_NAV = [

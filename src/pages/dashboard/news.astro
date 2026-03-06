@@ -1,0 +1,10 @@
+---
+import Base from "../../layouts/Base.astro";
+import NewsView from "../../components/Dashboard/NewsView";
+import { getSessionFromRequest } from "../../lib/auth";
+const user = await getSessionFromRequest(Astro.request);
+if (!user) return Astro.redirect("/login");
+---
+<Base title="News & Sentiment" fullscreen={true}>
+  <NewsView wallet={user.wallet} client:load />
+</Base>

@@ -45,6 +45,10 @@ export default function TradingView({ wallet }:{ wallet:string }) {
   const [streaming, setStreaming] = useState(false);
   const abortRef = useRef<AbortController|null>(null);
   const chatBottom = useRef<HTMLDivElement>(null);
+  const [sideTab, setSideTab] = useState<"chat"|"news">("chat");
+  const [news, setNews] = useState<{title:string;link:string;source:string;pubDate:string}[]>([]);
+  const [newsSentiment, setNewsSentiment] = useState<{sentiment:string;score:number;summary:string}|null>(null);
+  const [newsLoading, setNewsLoading] = useState(false);
 
   const load = useCallback(async (s:string, p:Period, iv:Interval) => {
     setLoading(true); setError(null);
@@ -60,6 +64,13 @@ export default function TradingView({ wallet }:{ wallet:string }) {
 
   useEffect(() => { load(sym, period, interval); }, [sym, period, interval, load]);
   useEffect(() => { chatBottom.current?.scrollIntoView({ behavior:"smooth" }); }, [msgs, streaming]);
+  useEffect(() => {
+    setNewsLoading(true);
+    fetch(`/api/news?symbol=${sym}`).then(r=>r.json()).then((d:any)=>{
+      setNews(d.news??[]); setNewsSentiment(d.sentiment??null);
+    }).catch(()=>{setNews([]);setNewsSentiment(null);}).finally(()=>setNewsLoading(false));
+  }, [sym]);
+  const newsTimeAgo = (ds:string) => { try { const m=Math.floor((Date.now()-new Date(ds).getTime())/60000); return m<60?`${m}m`:m<1440?`${Math.floor(m/60)}h`:`${Math.floor(m/1440)}d`; } catch { return ""; } };
 
   const sendChat = useCallback(async (text:string) => {
     if (!text.trim() || streaming) return;
@@ -198,40 +209,82 @@ export default function TradingView({ wallet }:{ wallet:string }) {
           </>}
         </div>
 
-        {/* AI Chat */}
+        {/* Sidebar: Chat / News */}
         <div className="w-72 xl:w-80 border-l border-void-700 flex flex-col shrink-0">
-          <div className="flex items-center justify-between px-4 py-2.5 border-b border-void-700 shrink-0">
-            <div className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"/><span className="text-[10px] font-mono font-semibold text-cyan-400 tracking-widest">QWENAI</span></div>
-            {msgs.length>0 && <button onClick={()=>setMsgs([])} className="text-[9px] font-mono text-void-500 hover:text-bear transition-colors">CLEAR</button>}
+          {/* Tabs */}
+          <div className="flex border-b border-void-700 shrink-0">
+            <button onClick={()=>setSideTab("chat")} className={`flex-1 flex items-center justify-center gap-1.5 px-4 py-2.5 text-[10px] font-mono font-semibold tracking-widest transition-colors ${sideTab==="chat"?"text-cyan-400 bg-void-800/50 border-b-2 border-cyan-400":"text-void-500 hover:text-slate-400"}`}>
+              <span className={`w-1.5 h-1.5 rounded-full ${sideTab==="chat"?"bg-cyan-400 animate-pulse":"bg-void-600"}`}/>QWENAI
+            </button>
+            <button onClick={()=>setSideTab("news")} className={`flex-1 flex items-center justify-center gap-1.5 px-4 py-2.5 text-[10px] font-mono font-semibold tracking-widest transition-colors ${sideTab==="news"?"text-cyan-400 bg-void-800/50 border-b-2 border-cyan-400":"text-void-500 hover:text-slate-400"}`}>
+              NEWS{news.length>0&&<span className="text-[8px] bg-void-700 px-1 rounded text-void-400">{news.length}</span>}
+            </button>
           </div>
-          <div className="flex-1 overflow-y-auto p-3 space-y-3 min-h-0">
-            {msgs.length===0 && <div className="space-y-2">
-              <p className="text-[10px] font-mono text-void-500">Ask QwenAI about <span className="text-cyan-400">{sym}</span> — with live market context.</p>
-              {["Analyze current trend","RSI & MACD signals?","Support & resistance?","Best entry strategy?"].map(q=>(
-                <button key={q} onClick={()=>sendChat(q)} className="w-full text-left text-[10px] font-mono px-3 py-1.5 bg-void-800 border border-void-700 rounded hover:border-cyan-500/30 text-slate-500 hover:text-cyan-300 transition-all">› {q}</button>
-              ))}
-            </div>}
-            {msgs.map(m=>(
-              <div key={m.id} className={`flex gap-2 animate-fade-in ${m.role==="user"?"flex-row-reverse":""}`}>
-                <div className={`shrink-0 w-5 h-5 rounded flex items-center justify-center text-[8px] font-mono font-bold ${m.role==="user"?"bg-cyan-500 text-void-900":"bg-void-700 text-cyan-400 border border-void-600"}`}>{m.role==="user"?"U":"AI"}</div>
-                <div className={`max-w-[88%] rounded-lg px-2.5 py-2 text-[11px] font-mono leading-relaxed whitespace-pre-wrap ${m.role==="user"?"bg-cyan-500/10 border border-cyan-500/20 text-cyan-100":"bg-void-800 border border-void-700 text-slate-300"}`}>
-                  {m.content || (streaming && m.role==="assistant" && <span className="flex gap-1">{[0,1,2].map(i=><span key={i} className="w-1 h-1 rounded-full bg-cyan-400 animate-pulse-dot" style={{animationDelay:`${i*0.16}s`}}/>)}</span>)}
-                </div>
-              </div>
-            ))}
-            <div ref={chatBottom}/>
-          </div>
-          <div className="p-2.5 border-t border-void-700 shrink-0">
-            <div className="flex gap-2">
-              <textarea value={chatInput} onChange={e=>setChatInput(e.target.value)}
-                onKeyDown={e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();sendChat(chatInput);}}}
-                placeholder="Ask QwenAI..." rows={2} disabled={streaming}
-                className="flex-1 bg-void-800 border border-void-700 rounded-lg px-3 py-2 text-[10px] font-mono text-slate-200 placeholder-void-500 resize-none focus:outline-none focus:border-cyan-500/30 transition-colors disabled:opacity-50"/>
-              {streaming
-                ? <button onClick={()=>{abortRef.current?.abort();setStreaming(false);}} className="px-2 self-end py-2 bg-bear-dim border border-bear/30 rounded-lg text-bear text-[10px] hover:bg-bear/20 transition-colors">■</button>
-                : <button onClick={()=>sendChat(chatInput)} disabled={!chatInput.trim()} className="px-2 self-end py-2 bg-cyan-500/10 border border-cyan-500/30 rounded-lg text-cyan-400 text-[10px] hover:bg-cyan-500/20 transition-colors disabled:opacity-30">▶</button>}
+
+          {/* Chat panel */}
+          {sideTab==="chat" && <>
+            <div className="flex items-center justify-between px-4 py-1.5 border-b border-void-700 shrink-0">
+              <span className="text-[9px] font-mono text-void-500">Context: <span className="text-cyan-400">{sym}</span></span>
+              {msgs.length>0 && <button onClick={()=>setMsgs([])} className="text-[9px] font-mono text-void-500 hover:text-bear transition-colors">CLEAR</button>}
             </div>
-          </div>
+            <div className="flex-1 overflow-y-auto p-3 space-y-3 min-h-0">
+              {msgs.length===0 && <div className="space-y-2">
+                <p className="text-[10px] font-mono text-void-500">Ask QwenAI about <span className="text-cyan-400">{sym}</span> — with live market context.</p>
+                {["Analyze current trend","RSI & MACD signals?","Support & resistance?","Best entry strategy?"].map(q=>(
+                  <button key={q} onClick={()=>sendChat(q)} className="w-full text-left text-[10px] font-mono px-3 py-1.5 bg-void-800 border border-void-700 rounded hover:border-cyan-500/30 text-slate-500 hover:text-cyan-300 transition-all">› {q}</button>
+                ))}
+              </div>}
+              {msgs.map(m=>(
+                <div key={m.id} className={`flex gap-2 animate-fade-in ${m.role==="user"?"flex-row-reverse":""}`}>
+                  <div className={`shrink-0 w-5 h-5 rounded flex items-center justify-center text-[8px] font-mono font-bold ${m.role==="user"?"bg-cyan-500 text-void-900":"bg-void-700 text-cyan-400 border border-void-600"}`}>{m.role==="user"?"U":"AI"}</div>
+                  <div className={`max-w-[88%] rounded-lg px-2.5 py-2 text-[11px] font-mono leading-relaxed whitespace-pre-wrap ${m.role==="user"?"bg-cyan-500/10 border border-cyan-500/20 text-cyan-100":"bg-void-800 border border-void-700 text-slate-300"}`}>
+                    {m.content || (streaming && m.role==="assistant" && <span className="flex gap-1">{[0,1,2].map(i=><span key={i} className="w-1 h-1 rounded-full bg-cyan-400 animate-pulse-dot" style={{animationDelay:`${i*0.16}s`}}/>)}</span>)}
+                  </div>
+                </div>
+              ))}
+              <div ref={chatBottom}/>
+            </div>
+            <div className="p-2.5 border-t border-void-700 shrink-0">
+              <div className="flex gap-2">
+                <textarea value={chatInput} onChange={e=>setChatInput(e.target.value)}
+                  onKeyDown={e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();sendChat(chatInput);}}}
+                  placeholder="Ask QwenAI..." rows={2} disabled={streaming}
+                  className="flex-1 bg-void-800 border border-void-700 rounded-lg px-3 py-2 text-[10px] font-mono text-slate-200 placeholder-void-500 resize-none focus:outline-none focus:border-cyan-500/30 transition-colors disabled:opacity-50"/>
+                {streaming
+                  ? <button onClick={()=>{abortRef.current?.abort();setStreaming(false);}} className="px-2 self-end py-2 bg-bear-dim border border-bear/30 rounded-lg text-bear text-[10px] hover:bg-bear/20 transition-colors">■</button>
+                  : <button onClick={()=>sendChat(chatInput)} disabled={!chatInput.trim()} className="px-2 self-end py-2 bg-cyan-500/10 border border-cyan-500/30 rounded-lg text-cyan-400 text-[10px] hover:bg-cyan-500/20 transition-colors disabled:opacity-30">▶</button>}
+              </div>
+            </div>
+          </>}
+
+          {/* News panel */}
+          {sideTab==="news" && <>
+            {/* Sentiment badge */}
+            {newsSentiment && <div className={`mx-3 mt-3 rounded-lg border p-2.5 ${newsSentiment.sentiment==="bullish"?"bg-bull/10 border-bull/30":newsSentiment.sentiment==="bearish"?"bg-bear/10 border-bear/30":"bg-cyan-500/10 border-cyan-500/30"}`}>
+              <div className="flex items-center justify-between">
+                <span className={`text-[10px] font-mono font-bold uppercase tracking-widest ${newsSentiment.sentiment==="bullish"?"text-bull":newsSentiment.sentiment==="bearish"?"text-bear":"text-cyan-400"}`}>{newsSentiment.sentiment}</span>
+                <span className={`text-sm font-mono font-bold ${newsSentiment.score>20?"text-bull":newsSentiment.score<-20?"text-bear":"text-cyan-400"}`}>{newsSentiment.score>0?"+":""}{newsSentiment.score}</span>
+              </div>
+              <p className="text-[9px] font-mono text-slate-400 mt-1 leading-relaxed">{newsSentiment.summary}</p>
+            </div>}
+            <div className="flex-1 overflow-y-auto min-h-0">
+              {newsLoading && <div className="flex items-center justify-center py-8"><div className="flex gap-1">{[0,1,2].map(i=><span key={i} className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse-dot" style={{animationDelay:`${i*0.16}s`}}/>)}</div></div>}
+              {!newsLoading && news.length===0 && <p className="text-center text-[10px] font-mono text-void-500 py-8">No news for {sym}</p>}
+              {!newsLoading && news.map((item,i)=>(
+                <a key={i} href={item.link} target="_blank" rel="noopener noreferrer"
+                  className="block px-3 py-2.5 border-b border-void-800 hover:bg-void-800/50 transition-colors group">
+                  <p className="text-[11px] text-slate-300 leading-snug group-hover:text-cyan-300 transition-colors">{item.title}</p>
+                  <div className="flex items-center gap-2 mt-1">
+                    {item.source && <span className="text-[9px] font-mono text-cyan-400/60">{item.source}</span>}
+                    {item.pubDate && <span className="text-[9px] font-mono text-void-500">{newsTimeAgo(item.pubDate)}</span>}
+                  </div>
+                </a>
+              ))}
+            </div>
+            <div className="p-2.5 border-t border-void-700 shrink-0">
+              <a href="/dashboard/news" className="block w-full text-center py-1.5 text-[9px] font-mono text-void-500 hover:text-cyan-400 border border-void-700 rounded-lg hover:border-cyan-500/30 transition-all">VIEW FULL NEWS PAGE</a>
+            </div>
+          </>}
         </div>
       </div>
     </DashboardLayout>

@@ -257,6 +257,138 @@ export function ScreenerView({ wallet }:{ wallet:string }) {
   );
 }
 
+// ─── NEWS & SENTIMENT ────────────────────────────────────────────────────────
+interface NewsItem { title: string; link: string; source: string; pubDate: string }
+interface SentimentResult { sentiment: "bullish"|"bearish"|"neutral"; score: number; summary: string }
+
+export function NewsView({ wallet }:{ wallet:string }) {
+  const [symbol, setSymbol] = useState("AAPL");
+  const [input, setInput] = useState("AAPL");
+  const [news, setNews] = useState<NewsItem[]>([]);
+  const [sentiment, setSentiment] = useState<SentimentResult|null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string|null>(null);
+
+  const loadNews = async (sym: string) => {
+    setLoading(true); setError(null); setSentiment(null);
+    try {
+      const r = await fetch(`/api/news?symbol=${sym}`);
+      const d = await r.json() as { news: NewsItem[]; sentiment: SentimentResult|null; error?: string };
+      if (!r.ok) throw new Error(d.error ?? "Failed to fetch news");
+      setNews(d.news ?? []);
+      setSentiment(d.sentiment);
+    } catch (e) { setError((e as Error).message); setNews([]); }
+    finally { setLoading(false); }
+  };
+
+  useEffect(() => { loadNews(symbol); }, [symbol]);
+
+  const POPULAR = ["AAPL","NVDA","TSLA","MSFT","GOOGL","AMZN","BTC-USD","META"];
+  const scoreColor = (s: number) => s > 20 ? "text-bull" : s < -20 ? "text-bear" : "text-cyan-400";
+  const sentimentBg = (s: string) => s === "bullish" ? "bg-bull/10 border-bull/30" : s === "bearish" ? "bg-bear/10 border-bear/30" : "bg-cyan-500/10 border-cyan-500/30";
+  const sentimentText = (s: string) => s === "bullish" ? "text-bull" : s === "bearish" ? "text-bear" : "text-cyan-400";
+  const timeAgo = (dateStr: string) => {
+    try {
+      const diff = Date.now() - new Date(dateStr).getTime();
+      const mins = Math.floor(diff / 60000);
+      if (mins < 60) return `${mins}m ago`;
+      const hrs = Math.floor(mins / 60);
+      if (hrs < 24) return `${hrs}h ago`;
+      return `${Math.floor(hrs / 24)}d ago`;
+    } catch { return ""; }
+  };
+
+  return (
+    <DashboardLayout active="/dashboard/news" wallet={wallet}>
+      {/* Header */}
+      <header className="flex items-center gap-3 px-5 py-2.5 border-b border-void-700 bg-void-850 shrink-0 overflow-x-auto">
+        <span className="text-[10px] font-mono text-cyan-400 tracking-widest font-semibold shrink-0">NEWS & SENTIMENT</span>
+        <form onSubmit={e=>{e.preventDefault();const s=input.trim().toUpperCase();if(s){setSymbol(s);}}} className="flex gap-2 shrink-0">
+          <input value={input} onChange={e=>setInput(e.target.value.toUpperCase())} placeholder="Symbol"
+            className="bg-void-800 border border-void-600 rounded-lg px-3 py-1.5 text-xs font-mono text-cyan-300 placeholder-void-500 w-24 focus:outline-none focus:border-cyan-500/40 uppercase" />
+          <button type="submit" className="px-3 py-1.5 bg-cyan-500/10 border border-cyan-500/30 rounded-lg text-cyan-400 text-[10px] font-mono hover:bg-cyan-500/20 transition-colors">GO</button>
+        </form>
+        <div className="flex gap-1 overflow-x-auto">
+          {POPULAR.map(s => <button key={s} onClick={()=>{setSymbol(s);setInput(s);}}
+            className={`px-2 py-1 text-[10px] font-mono rounded whitespace-nowrap transition-colors ${symbol===s?"bg-cyan-500/15 text-cyan-400 border border-cyan-500/25":"text-void-500 hover:text-slate-400"}`}>{s}</button>)}
+        </div>
+      </header>
+
+      <div className="flex-1 flex overflow-hidden min-h-0">
+        {/* Sentiment panel */}
+        <div className="w-72 border-r border-void-700 bg-void-850 flex flex-col shrink-0">
+          <div className="px-4 py-3 border-b border-void-700">
+            <p className="text-[10px] font-mono text-cyan-400 tracking-widest font-semibold">AI SENTIMENT</p>
+            <p className="text-[9px] font-mono text-void-500 mt-0.5">Powered by QwenAI</p>
+          </div>
+          <div className="flex-1 p-4 overflow-y-auto">
+            {loading && <div className="flex flex-col items-center justify-center h-full gap-2">
+              <div className="flex gap-1.5">{[0,1,2].map(i => <span key={i} className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse-dot" style={{ animationDelay: `${i * 0.16}s` }} />)}</div>
+              <p className="text-[10px] font-mono text-void-500">Analyzing sentiment...</p>
+            </div>}
+            {!loading && sentiment && <>
+              {/* Score gauge */}
+              <div className={`rounded-xl border p-4 mb-4 ${sentimentBg(sentiment.sentiment)}`}>
+                <div className="flex items-center justify-between mb-2">
+                  <span className={`text-xs font-mono font-bold uppercase tracking-widest ${sentimentText(sentiment.sentiment)}`}>{sentiment.sentiment}</span>
+                  <span className={`text-2xl font-mono font-bold ${scoreColor(sentiment.score)}`}>{sentiment.score > 0 ? "+" : ""}{sentiment.score}</span>
+                </div>
+                {/* Score bar */}
+                <div className="relative h-2 bg-void-900/50 rounded-full overflow-hidden">
+                  <div className="absolute inset-y-0 left-1/2 w-px bg-void-600" />
+                  <div className={`absolute inset-y-0 rounded-full transition-all ${sentiment.score >= 0 ? "bg-bull" : "bg-bear"}`}
+                    style={sentiment.score >= 0 ? { left: "50%", width: `${sentiment.score / 2}%` } : { right: "50%", width: `${Math.abs(sentiment.score) / 2}%` }} />
+                </div>
+                <div className="flex justify-between mt-1">
+                  <span className="text-[8px] font-mono text-bear">-100</span>
+                  <span className="text-[8px] font-mono text-void-500">0</span>
+                  <span className="text-[8px] font-mono text-bull">+100</span>
+                </div>
+              </div>
+              {/* AI Summary */}
+              <div className="bg-void-800 border border-void-700 rounded-xl p-3">
+                <p className="text-[9px] font-mono text-void-500 uppercase tracking-widest mb-2">AI Analysis</p>
+                <p className="text-[11px] font-mono text-slate-300 leading-relaxed">{sentiment.summary}</p>
+              </div>
+            </>}
+            {!loading && !sentiment && !error && <div className="flex flex-col items-center justify-center h-full gap-2">
+              <p className="text-void-600 font-mono text-xs">No sentiment data</p>
+              <p className="text-[9px] font-mono text-void-600">Requires Ollama running</p>
+            </div>}
+          </div>
+        </div>
+
+        {/* News feed */}
+        <div className="flex-1 flex flex-col overflow-hidden">
+          <div className="px-5 py-2.5 border-b border-void-700 bg-void-850 shrink-0 flex items-center gap-3">
+            <p className="text-[10px] font-mono text-void-500 tracking-widest">
+              <span className="text-white font-semibold">{symbol}</span> — {news.length} articles
+            </p>
+            <button onClick={() => loadNews(symbol)} className="ml-auto text-[9px] font-mono text-void-500 hover:text-cyan-400 transition-colors">REFRESH</button>
+          </div>
+          <div className="flex-1 overflow-y-auto">
+            {loading && <div className="flex items-center justify-center h-full"><div className="flex gap-1.5">{[0,1,2].map(i => <span key={i} className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse-dot" style={{ animationDelay: `${i * 0.16}s` }} />)}</div></div>}
+            {error && !loading && <div className="flex items-center justify-center h-full"><div className="bg-bear-dim border border-bear/20 rounded-xl px-6 py-4 text-bear font-mono text-sm">{error}</div></div>}
+            {!loading && !error && news.length === 0 && <div className="flex flex-col items-center justify-center h-full gap-2"><p className="text-void-600 font-display text-xl italic">No news found</p><p className="text-[10px] font-mono text-void-600">Try a different symbol</p></div>}
+            {!loading && !error && news.length > 0 && <div className="divide-y divide-void-800">
+              {news.map((item, i) => (
+                <a key={i} href={item.link} target="_blank" rel="noopener noreferrer"
+                  className="block px-5 py-3.5 hover:bg-void-800/50 transition-colors group">
+                  <p className="text-sm text-slate-200 font-sans leading-snug group-hover:text-cyan-300 transition-colors mb-1.5">{item.title}</p>
+                  <div className="flex items-center gap-3">
+                    {item.source && <span className="text-[10px] font-mono text-cyan-400/70">{item.source}</span>}
+                    {item.pubDate && <span className="text-[10px] font-mono text-void-500">{timeAgo(item.pubDate)}</span>}
+                  </div>
+                </a>
+              ))}
+            </div>}
+          </div>
+        </div>
+      </div>
+    </DashboardLayout>
+  );
+}
+
 // ─── COMPARE ──────────────────────────────────────────────────────────────────
 const COLORS = ["#06b6d4","#22c55e","#3b82f6","#f43f5e","#a3e635","#f59e0b"];
 type Period = "1mo"|"3mo"|"6mo"|"1y"|"2y";

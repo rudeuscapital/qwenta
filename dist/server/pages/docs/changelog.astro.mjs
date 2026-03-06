@@ -1,0 +1,26 @@
+/* empty css                                      */
+import { f as createComponent, j as renderComponent, r as renderTemplate, i as createAstro, m as maybeRenderHead } from '../../chunks/astro/server_BVE5k6Zu.mjs';
+import 'kleur/colors';
+import { $ as $$DocsLayout } from '../../chunks/DocsLayout_DglTnE4M.mjs';
+export { renderers } from '../../renderers.mjs';
+
+const $$Astro = createAstro();
+const $$Changelog = createComponent(($$result, $$props, $$slots) => {
+  const Astro2 = $$result.createAstro($$Astro, $$props, $$slots);
+  Astro2.self = $$Changelog;
+  return renderTemplate`${renderComponent($$result, "DocsLayout", $$DocsLayout, { "title": "Changelog" }, { "default": ($$result2) => renderTemplate` ${maybeRenderHead()}<div class="prose"> <h1>Changelog</h1> <p>All notable changes to Qwenta are documented here.</p> <hr> <h2>v1.0.0 — Enterprise Release</h2> <p><em>March 2026</em></p> <h3>Initial Release</h3> <p><strong>Platform</strong></p> <ul> <li>Astro SSR with React islands architecture</li> <li>PostgreSQL database with full schema (users, watchlists, portfolios, positions, transactions)</li> <li>WalletConnect / MetaMask / SIWE authentication</li> <li>Per-wallet data isolation</li> </ul> <p><strong>Dashboard</strong></p> <ul> <li>Live price chart with multi-timeframe support (1H, 4H, Daily, Weekly)</li> <li>Period selector: 1D, 5D, 1M, 3M, 6M, 1Y, 2Y</li> <li>Price chart with Bollinger Bands (BB) and SMA 20/50 overlays</li> <li>RSI(14) chart with overbought/oversold reference lines</li> <li>MACD + Signal + Histogram chart</li> <li>Volume bar chart</li> <li>Export to CSV and XLSX with all indicators</li> </ul> <p><strong>Watchlist</strong></p> <ul> <li>Multiple watchlists per user</li> <li>Live price updates with daily change %</li> <li>Notes per symbol</li> <li>Full CRUD operations</li> </ul> <p><strong>Portfolio Tracker</strong></p> <ul> <li>Position tracking with weighted average cost calculation</li> <li>Real-time unrealized P&amp;L</li> <li>Transaction history (BUY/SELL) with fee tracking</li> <li>Portfolio summary (total value, cost, return)</li> </ul> <p><strong>Stock Screener</strong></p> <ul> <li>Filter by: RSI range, MACD direction, SMA crosses, price range, daily change</li> <li>5 built-in presets: Oversold, Overbought, MACD Bullish, Golden Cross, Momentum</li> <li>Sortable results table</li> </ul> <p><strong>Multi-Symbol Compare</strong></p> <ul> <li>Compare up to 6 symbols simultaneously</li> <li>Normalized % return chart from period start</li> <li>Summary table with period returns and daily change</li> </ul> <p><strong>AI Analyst (QwenAI)</strong></p> <ul> <li>Powered by Qwen 2.5 via Ollama (100% private)</li> <li>Full market context injection (OHLCV + all indicators)</li> <li>Streaming responses</li> <li>Chat history per session</li> </ul> <p><strong>Documentation</strong></p> <ul> <li>Full API Reference with interactive Try It</li> <li>Getting Started guide</li> <li>Video tutorial section</li> <li>This changelog</li> </ul> <hr> <h2>Upcoming in v1.1.0</h2> <p><em>Estimated Q3 2026</em></p> <ul> <li>Real-time WebSocket price feeds</li> <li>Price alert system (email + webhook notifications)</li> <li>Mobile-responsive layout improvements</li> <li>Backtesting engine for simple strategies</li> <li>Advanced screener: market cap, P/E ratio, beta filters</li> </ul> <h2>Upcoming in v1.2.0</h2> <p><em>Estimated Q4 2026</em></p> <ul> <li>Multi-chain portfolio tracking (Ethereum, Solana, Base)</li> <li>On-chain DeFi position integration</li> <li>Team workspaces with role-based access</li> <li>White-label deployment option</li> </ul> </div> ` })}`;
+}, "D:/project/qwenta/src/pages/docs/changelog.astro", void 0);
+
+const $$file = "D:/project/qwenta/src/pages/docs/changelog.astro";
+const $$url = "/docs/changelog";
+
+const _page = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null,
+  default: $$Changelog,
+  file: $$file,
+  url: $$url
+}, Symbol.toStringTag, { value: 'Module' }));
+
+const page = () => _page;
+
+export { page };

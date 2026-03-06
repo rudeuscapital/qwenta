@@ -14,6 +14,7 @@ import Base from "../layouts/Base.astro";
   <div class="hidden md:flex items-center gap-8 text-sm text-slate-400">
     <a href="#features" class="hover:text-cyan-400 transition-colors">Features</a>
     <a href="#security" class="hover:text-cyan-400 transition-colors">Security</a>
+    <a href="#mobile" class="hover:text-cyan-400 transition-colors">Mobile</a>
     <a href="/docs" class="hover:text-cyan-400 transition-colors">Docs</a>
     <a href="#roadmap" class="hover:text-cyan-400 transition-colors">Roadmap</a>
   </div>
@@ -134,6 +135,76 @@ import Base from "../layouts/Base.astro";
           <p class="text-slate-500 text-sm leading-relaxed">{f.desc}</p>
         </div>
       ))}
+    </div>
+  </div>
+</section>
+
+<!-- ── MOBILE APP ──────────────────────────────────────────────────────── -->
+<section id="mobile" class="py-32 px-6 border-t border-void-700/50 relative overflow-hidden">
+  <div class="absolute inset-0 bg-glow-hero opacity-30" />
+  <div class="max-w-5xl mx-auto relative z-10">
+    <div class="text-center mb-16">
+      <p class="text-xs font-mono text-cyan-500 tracking-widest uppercase mb-3">Mobile Experience</p>
+      <h2 class="font-display text-5xl text-white">Install Qwenta on<br/>your phone</h2>
+      <p class="text-slate-400 text-lg mt-4 max-w-2xl mx-auto">Full trading dashboard in your pocket. Install as a native app — no app store needed.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+      <!-- Install steps -->
+      <div class="space-y-4">
+        {[
+          { step:"1", icon:"🌐", title:"Open in your browser", desc:"Visit qwenta.xyz on Chrome (Android) or Safari (iOS)." },
+          { step:"2", icon:"📲", title:"Tap Install / Add to Home Screen", desc:'On Android: tap the install banner or menu → "Install app". On iOS: tap Share → "Add to Home Screen".' },
+          { step:"3", icon:"📱", title:"Launch like a native app", desc:"Qwenta opens fullscreen — no browser UI. Connect your wallet and trade instantly." },
+        ].map(s => (
+          <div class="flex gap-4 p-5 rounded-2xl border border-void-600 bg-void-800/50 hover:border-cyan-500/30 transition-all group">
+            <div class="shrink-0 w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 font-mono font-bold text-sm">{s.step}</div>
+            <div>
+              <h3 class="text-white font-semibold text-sm mb-1 group-hover:text-cyan-300 transition-colors">{s.title}</h3>
+              <p class="text-slate-500 text-xs leading-relaxed">{s.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Feature highlights -->
+      <div class="space-y-4">
+        <div class="p-6 rounded-2xl border border-cyan-500/20 bg-cyan-500/5">
+          <h3 class="text-cyan-400 font-semibold mb-3">What you get</h3>
+          <ul class="space-y-2.5">
+            {[
+              "Fullscreen trading dashboard — no browser chrome",
+              "Offline access to cached charts and data",
+              "Home screen icon with Qwenta branding",
+              "Instant load — static assets cached locally",
+              "Push-ready architecture for future alerts",
+              "Works on Android, iOS, and desktop",
+            ].map(item => (
+              <li class="flex items-start gap-2 text-sm text-slate-300">
+                <span class="text-cyan-400 mt-0.5 shrink-0">✓</span>
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div class="flex gap-3">
+          <div class="flex-1 p-4 rounded-xl border border-void-600 bg-void-800/50 text-center">
+            <p class="text-2xl mb-1">🤖</p>
+            <p class="text-[10px] font-mono text-slate-400 tracking-widest">ANDROID</p>
+            <p class="text-[9px] font-mono text-void-500 mt-0.5">Chrome 73+</p>
+          </div>
+          <div class="flex-1 p-4 rounded-xl border border-void-600 bg-void-800/50 text-center">
+            <p class="text-2xl mb-1">🍎</p>
+            <p class="text-[10px] font-mono text-slate-400 tracking-widest">iOS</p>
+            <p class="text-[9px] font-mono text-void-500 mt-0.5">Safari 14.1+</p>
+          </div>
+          <div class="flex-1 p-4 rounded-xl border border-void-600 bg-void-800/50 text-center">
+            <p class="text-2xl mb-1">💻</p>
+            <p class="text-[10px] font-mono text-slate-400 tracking-widest">DESKTOP</p>
+            <p class="text-[9px] font-mono text-void-500 mt-0.5">Chrome / Edge</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>

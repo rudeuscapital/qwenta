@@ -1,0 +1,35 @@
+/* empty css                                   */
+import { f as createComponent, j as renderComponent, r as renderTemplate, i as createAstro, m as maybeRenderHead } from '../chunks/astro/server_BVE5k6Zu.mjs';
+import 'kleur/colors';
+import { $ as $$DocsLayout } from '../chunks/DocsLayout_DglTnE4M.mjs';
+export { renderers } from '../renderers.mjs';
+
+const $$Astro = createAstro();
+const $$Index = createComponent(($$result, $$props, $$slots) => {
+  const Astro2 = $$result.createAstro($$Astro, $$props, $$slots);
+  Astro2.self = $$Index;
+  return renderTemplate`${renderComponent($$result, "DocsLayout", $$DocsLayout, { "title": "Overview" }, { "default": ($$result2) => renderTemplate` ${maybeRenderHead()}<div class="prose"> <h1>Qwenta Documentation</h1> <p>Welcome to the official Qwenta Enterprise documentation. This guide covers everything you need to deploy, configure, and extend the platform.</p> <h2>What is Qwenta?</h2> <p>Qwenta is an <strong>enterprise-grade trading intelligence platform</strong> built with:</p> <ul> <li><strong>Astro SSR</strong> — server-side rendering with React islands</li> <li><strong>PostgreSQL</strong> — persistent storage for users, watchlists, portfolios</li> <li><strong>Yahoo Finance</strong> — real-time market data (free, no API key)</li> <li><strong>Ollama + Qwen</strong> — private AI analyst</li> <li><strong>WalletConnect / SIWE</strong> — crypto wallet authentication</li> </ul> <h2>Architecture</h2> <pre><code>Browser ──→ Astro SSR (port 4321)
+               │
+               ├── /api/stock       → Yahoo Finance
+               ├── /api/chat        → Ollama (VPS)
+               ├── /api/watchlist   → PostgreSQL
+               ├── /api/portfolio   → PostgreSQL
+               ├── /api/screener    → Yahoo Finance (batch)
+               ├── /api/compare     → Yahoo Finance (batch)
+               ├── /api/export      → XLSX/CSV generator
+               └── /api/auth        → SIWE verification</code></pre> <h2>Quick Links</h2> <ul> <li><a href="/docs/getting-started">Getting Started</a> — Connect your wallet &amp; start trading</li> <li><a href="/docs/api">API Reference</a> — Full endpoint documentation</li> <li><a href="/docs/tutorials">Tutorials</a> — Video guides</li> <li><a href="/docs/changelog">Changelog</a> — Release history</li> </ul> <h2>Requirements</h2> <table> <thead> <tr><th>Dependency</th><th>Version</th><th>Notes</th></tr> </thead> <tbody> <tr><td>Node.js</td><td>18+</td><td>ESM support required</td></tr> <tr><td>PostgreSQL</td><td>14+</td><td>For user data &amp; portfolio</td></tr> <tr><td>Ollama</td><td>latest</td><td>For AI analysis</td></tr> <tr><td>Qwen model</td><td>qwen2.5</td><td>4GB RAM minimum</td></tr> </tbody> </table> </div> ` })}`;
+}, "D:/project/qwenta/src/pages/docs/index.astro", void 0);
+
+const $$file = "D:/project/qwenta/src/pages/docs/index.astro";
+const $$url = "/docs";
+
+const _page = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null,
+  default: $$Index,
+  file: $$file,
+  url: $$url
+}, Symbol.toStringTag, { value: 'Module' }));
+
+const page = () => _page;
+
+export { page };

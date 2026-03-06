@@ -21,7 +21,10 @@
       "Bash(node --input-type=module -e \"import yf from ''yahoo-finance2''; console.log\\(typeof yf, typeof yf.quoteSummary, typeof yf.historical, typeof yf.quote, typeof yf.chart\\)\")",
       "Bash(node --input-type=module -e \"import yf from ''yahoo-finance2''; const inst = yf\\(\\); console.log\\(typeof inst, Object.keys\\(inst\\)\\)\")",
       "Bash(node --input-type=module -e \"import YF from ''yahoo-finance2''; const yf = new YF\\(\\); console.log\\(Object.getOwnPropertyNames\\(Object.getPrototypeOf\\(yf\\)\\).filter\\(k => k !== ''constructor''\\)\\)\")",
-      "Bash(node --input-type=module -e \"import YF from ''yahoo-finance2''; const yf = new YF\\(\\); const proto = Object.getPrototypeOf\\(yf\\); const keys = Object.getOwnPropertyNames\\(proto\\); console.log\\(keys\\)\")"
+      "Bash(node --input-type=module -e \"import YF from ''yahoo-finance2''; const yf = new YF\\(\\); const proto = Object.getPrototypeOf\\(yf\\); const keys = Object.getOwnPropertyNames\\(proto\\); console.log\\(keys\\)\")",
+      "Bash(node -e \":*)",
+      "Bash(npx astro check)",
+      "Bash(npx astro build)"
     ]
   }
 }
